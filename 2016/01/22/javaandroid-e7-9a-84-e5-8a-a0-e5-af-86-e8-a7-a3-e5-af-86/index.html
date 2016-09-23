@@ -1,0 +1,751 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java&amp;amp;Android的加密解密
+
+
+&amp;nbsp;
+&amp;nbsp;
+通过 RSA 加密解密，同理可以进行 MD5 和 SHA 值的计算，注意使用的包是 javax.crypto(加密解密)、java.security(密钥生成获取，MD5计算等)。主要的类是 KeyPairGenerator、 KeyPair、 PublicKey、 PrivateKey、 KeyFactory、 Cip">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java&Android的加密解密">
+<meta property="og:url" content="http://eraise.xyz/2016/01/22/javaandroid-e7-9a-84-e5-8a-a0-e5-af-86-e8-a7-a3-e5-af-86/index.html">
+<meta property="og:site_name" content="我吃西瓜">
+<meta property="og:description" content="Java&amp;amp;Android的加密解密
+
+
+&amp;nbsp;
+&amp;nbsp;
+通过 RSA 加密解密，同理可以进行 MD5 和 SHA 值的计算，注意使用的包是 javax.crypto(加密解密)、java.security(密钥生成获取，MD5计算等)。主要的类是 KeyPairGenerator、 KeyPair、 PublicKey、 PrivateKey、 KeyFactory、 Cip">
+<meta property="og:updated_time" content="2016-09-23T01:49:15.842Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java&Android的加密解密">
+<meta name="twitter:description" content="Java&amp;amp;Android的加密解密
+
+
+&amp;nbsp;
+&amp;nbsp;
+通过 RSA 加密解密，同理可以进行 MD5 和 SHA 值的计算，注意使用的包是 javax.crypto(加密解密)、java.security(密钥生成获取，MD5计算等)。主要的类是 KeyPairGenerator、 KeyPair、 PublicKey、 PrivateKey、 KeyFactory、 Cip">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://eraise.xyz/2016/01/22/javaandroid-e7-9a-84-e5-8a-a0-e5-af-86-e8-a7-a3-e5-af-86/"/>
+
+  <title> Java&Android的加密解密 | 我吃西瓜 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">我吃西瓜</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">一念红尘，一念空门</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java&Android的加密解密
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-01-22T14:03:56+08:00" content="2016-01-22">
+              2016-01-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!--defaultCSS-->
+<p>Java&amp;Android的加密解密</p>
+<script src="file:///D:\Wiz\WizTools\htmleditor\utils.js" type="text/javascript" charset="utf-8"></script><script src="file:///D:\Wiz\WizTools\htmleditor\localize.js" type="text/javascript" charset="utf-8"></script><script src="file:///D:\Wiz\WizTools\htmleditor\core\wizEditor.js" type="text/javascript" charset="utf-8"></script><script src="file:///D:\Wiz\WizTools\htmleditor\core\checklist\todo.js" type="text/javascript" charset="utf-8"></script><script src="file:///D:\Wiz\WizTools\htmleditor\core\imageresize\dragresize.js" type="text/javascript" charset="utf-8"></script><script src="file:///D:\Wiz\WizTools\htmleditor\editorHelper.js" type="text/javascript" charset="utf-8"></script>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div><span style="font-family: Consolas;"><span style="font-size: 15px; line-height: 22px;"><strong><span style="color: #3366ff;">通过 RSA 加密解密，同理可以进行 MD5 和 SHA 值的计算，注意使用的包是 </span><span style="color: #ff0000;">javax.crypto</span><span style="color: #3366ff;">(加密解密)、</span><span style="color: #ff0000;">java.security</span><span style="color: #3366ff;">(密钥生成获取，MD5计算等)。</span></strong></span></span></div><br><div><span style="font-family: Consolas;"><span style="font-size: 15px; line-height: 22px;"><strong><span style="color: #3366ff;">主要的类是 </span><span style="color: #ff0000;">KeyPairGenerator</span><span style="color: #3366ff;">、 </span><span style="color: #ff0000;">KeyPair</span><span style="color: #3366ff;">、 </span><span style="color: #ff0000;">PublicKey</span><span style="color: #3366ff;">、 </span><span style="color: #ff0000;">PrivateKey</span><span style="color: #3366ff;">、 </span><span style="color: #ff0000;">KeyFactory</span><span style="color: #3366ff;">、 </span><span style="color: #ff0000;">Cipher</span><span style="color: #3366ff;">等</span></strong></span></span></div><br><div><span style="color: #7f0055; font-family: Consolas;"><span style="font-size: 15px; line-height: 22px;"><strong> </strong></span></span></div><br><div><span style="color: #993366; font-family: Consolas;"><span style="font-size: 15px; line-height: 22px;">以下为使用RSA进行的加密demo</span></span></div><br><div><span style="font-weight: bold; font-size: 11pt; color: #7f0055; font-family: 'Consolas';"> </span></div><br><div><br><div><!--WizRtf2Html Charset=0 --><span style="font-family: Consolas; font-size: 10.5pt; line-height: 1.5;">    </span><span style="font-weight: bold; font-size: 11pt; color: #7f0055; font-family: 'Consolas';">try<span style="font-weight: normal; color: windowtext;"> {</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #3f5fbf;">/<strong><strong><strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong></strong></strong></span></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">             <em> 生成密钥以供加密解密                                   </em></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">             <strong><strong><strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong></strong></strong>/</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 密钥生成器 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            KeyPairGenerator generator = KeyPairGenerator.<span style="font-style: italic;">getInstance</span>(<span style="color: #2a00ff;">“RSA”</span>);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 密钥对生成 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            KeyPair keyPair = generator.genKeyPair();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 获取公钥 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            RSAPublicKey publicKey = (RSAPublicKey)keyPair.getPublic();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 获取私钥 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            RSAPrivateKey privateKey = (RSAPrivateKey)keyPair.getPrivate();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 获取密钥的 Modules 和 Exponent 值以供密钥还原 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            BigInteger publicModules = publicKey.getModulus();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            BigInteger privateModules = privateKey.getModulus();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            BigInteger publicExponent = publicKey.getPublicExponent();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            BigInteger privateExponent = privateKey.getPrivateExponent();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println(<span style="color: #2a00ff;">“Public Modules == “</span> + publicModules);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println(<span style="color: #2a00ff;">“Private Modules == “</span> + privateModules);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println(<span style="color: #2a00ff;">“Public Exponent == “</span> + publicExponent);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println(<span style="color: #2a00ff;">“Private Exponent == “</span> + privateExponent);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #3f5fbf;">/<strong><strong><strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong></strong></strong></span></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">             <em> 通过 modules 和 exponent 还原密钥          </em></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">             <strong><strong><strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong></strong></strong>/</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 通过 Modules 和 Exponent 值生成 KeySpec </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            RSAPublicKeySpec publicSpec = <span style="font-weight: bold; color: #7f0055;">new</span> RSAPublicKeySpec(publicModules, publicExponent);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            RSAPrivateKeySpec privateSpec = <span style="font-weight: bold; color: #7f0055;">new</span> RSAPrivateKeySpec(privateModules, privateExponent);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 通过 KeySpec还原密钥，还原工具是 KeyFactory </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            KeyFactory keyFactory = KeyFactory.<span style="font-style: italic;">getInstance</span>(<span style="color: #2a00ff;">“RSA”</span>);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            RSAPublicKey <span style="text-decoration: underline;">rPublicKey</span> = <span style="font-weight: bold; color: #7f0055;">null</span>;</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            RSAPrivateKey <span style="text-decoration: underline;">rPrivateKey</span> = <span style="font-weight: bold; color: #7f0055;">null</span>;</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">try</span> {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                rPublicKey = (RSAPublicKey) keyFactory.generatePublic(publicSpec);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                rPrivateKey = (RSAPrivateKey) keyFactory.generatePrivate(privateSpec);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            } <span style="font-weight: bold; color: #7f0055;">catch</span> (InvalidKeySpecException e) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="color: #808000;">// <span style="font-weight: bold; color: #7f9fbf;">TODO</span> Auto-generated catch block</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                e.printStackTrace();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            }</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #3f5fbf;">/<strong><strong><strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong></strong></strong></span></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">             <em> 通过密钥进行简单的加密解密测试                  </em></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">             <em> 加密解密使用Cipher类进行                           </em></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">             <strong><strong><strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong></strong></strong>/</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            String secret = <span style="color: #2a00ff;">“这是一个秘密，不允许无关人士查看”</span>;</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">byte</span>[] bSecret = secret.getBytes();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">byte</span>[] dSecret = <span style="font-weight: bold; color: #7f0055;">null</span>;</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.print(<span style="color: #2a00ff;">“加密前byte数组：”</span>);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">for</span> (<span style="font-weight: bold; color: #7f0055;">byte</span> b : bSecret) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                System.<span style="font-style: italic; color: #0000c0;">out</span>.print(b);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            }</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println(<span style="color: #2a00ff;">“加密前： “</span> + <span style="font-weight: bold; color: #7f0055;">new</span> String(bSecret));</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> Cipher加密数据及还原数据 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            Cipher cipher = Cipher.<span style="font-style: italic;">getInstance</span>(<span style="color: #2a00ff;">“RSA/ECB/PKCS1Padding”</span>);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 加密初始化，通过私钥加密，指定的参数决定了加密还是解密 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            cipher.init(Cipher.<span style="font-style: italic; color: #0000c0;">ENCRYPT_MODE</span>, privateKey);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 可以通过 doFinal 或 update 进行加解密，String太短使用update可能会失败，可以选择 onFinal </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            dSecret = cipher.doFinal(bSecret);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.print(<span style="color: #2a00ff;">“加密后byte数组： “</span>);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">for</span> (<span style="font-weight: bold; color: #7f0055;">byte</span> b : dSecret) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                System.<span style="font-style: italic; color: #0000c0;">out</span>.print(b);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            }</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println(<span style="color: #2a00ff;">“加密后: “</span> + <span style="font-weight: bold; color: #7f0055;">new</span> String(dSecret));</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 重新初始化进行解密，参数为DECRYPT_MODE </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            cipher.init(Cipher.<span style="font-style: italic; color: #0000c0;">DECRYPT_MODE</span>, publicKey);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            dSecret = cipher.doFinal(dSecret);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.print(<span style="color: #2a00ff;">“解密后byte数组： “</span>);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">for</span> (<span style="font-weight: bold; color: #7f0055;">byte</span> b : dSecret) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                System.<span style="font-style: italic; color: #0000c0;">out</span>.print(b);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            }</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println(<span style="color: #2a00ff;">“解密后: “</span> + <span style="font-weight: bold; color: #7f0055;">new</span> String(dSecret));</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #3f5fbf;">/<strong><strong><strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong></strong></strong></span></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">             <em> 计算MD5值                                                      </em></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">             <em> 使用  MessageDigest计算                            </em></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">             <strong><strong><strong><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></strong></strong></strong>/</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> MessageDigest 计算 MD5 值，参数输入 SHA1 则是计算 SHA1 值，MD5为32位，SHA1为40位 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            MessageDigest digest = MessageDigest.<span style="font-style: italic;">getInstance</span>(<span style="color: #2a00ff;">“MD5”</span>);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 计算 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            digest.update(bSecret);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 取结果 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            dSecret = digest.digest();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 处理数组，把byte数组转为16进制字符串 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            StringBuilder md5 = <span style="font-weight: bold; color: #7f0055;">new</span> StringBuilder();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 二进制转十六进制，先把二进制转成十进制，再从数组中取对应的char </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">char</span>[] hexDigits = {<span style="color: #2a00ff;">‘0’</span>, <span style="color: #2a00ff;">‘1’</span>, <span style="color: #2a00ff;">‘2’</span>, <span style="color: #2a00ff;">‘3’</span>, <span style="color: #2a00ff;">‘4’</span>, <span style="color: #2a00ff;">‘5’</span>, <span style="color: #2a00ff;">‘6’</span>, <span style="color: #2a00ff;">‘7’</span>, <span style="color: #2a00ff;">‘8’</span>, <span style="color: #2a00ff;">‘9’</span>, <span style="color: #2a00ff;">‘a’</span>, <span style="color: #2a00ff;">‘b’</span>, <span style="color: #2a00ff;">‘c’</span>, <span style="color: #2a00ff;">‘d’</span>, <span style="color: #2a00ff;">‘e’</span>, <span style="color: #2a00ff;">‘f’</span>};</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">byte</span> b;</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">char</span> hex;</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">for</span> (<span style="font-weight: bold; color: #7f0055;">int</span> i = 0; i &lt; dSecret.<span style="color: #0000ff;">length</span>; i ++) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                b = dSecret[i];</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="color: #a4ac02;">/<em> </em></span></span></div><br><div><span style="font-size: 11pt; color: #a4ac02; font-family: 'Consolas';">                  取byte二进制的4位出来计算成16进制 ，</span></div><br><div><span style="font-size: 11pt; color: #a4ac02; font-family: 'Consolas';">                 <em> 系统将二进制转10进制，再去从hexDigits中找出对应的16进制char就实现了二进制转16进制 </em></span></div><br><div><span style="font-size: 11pt; color: #a4ac02; font-family: 'Consolas';">                  0xf是16进制中的16，在二进制中是1111，byte和二进制的1111进行运算得到byte中低四位的二进制值</span></div><br><div><span style="font-size: 11pt; color: #a4ac02; font-family: 'Consolas';">                 <em> 16位是取32位中间16位</em></span></div><br><div><span style="font-size: 11pt; color: #a4ac02; font-family: 'Consolas';">                 /</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                hex = hexDigits[b &gt;&gt;&gt; 4 &amp; 0xf];</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                md5.append(hex);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="color: #a4ac02;">/<em> 如果是32位md5字符串则需要以下 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                hex = hexDigits[b &amp; 0xf];</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                md5.append(hex);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            }</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println(<span style="color: #2a00ff;">“32位md5 == “</span> + md5);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println(<span style="color: #2a00ff;">“16位md5 == “</span> + md5.substring(8, 24));</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        } <span style="font-weight: bold; color: #7f0055;">catch</span> (NoSuchAlgorithmException e) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #808000;">// <span style="font-weight: bold; color: #7f9fbf;">TODO</span> Auto-generated catch block</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            e.printStackTrace();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        } <span style="font-weight: bold; color: #7f0055;">catch</span> (NoSuchPaddingException e) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #808000;">// <span style="font-weight: bold; color: #7f9fbf;">TODO</span> Auto-generated catch block</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            e.printStackTrace();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        } <span style="font-weight: bold; color: #7f0055;">catch</span> (InvalidKeyException e) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #808000;">// <span style="font-weight: bold; color: #7f9fbf;">TODO</span> Auto-generated catch block</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            e.printStackTrace();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        } <span style="font-weight: bold; color: #7f0055;">catch</span> (IllegalBlockSizeException e) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #808000;">// <span style="font-weight: bold; color: #7f9fbf;">TODO</span> Auto-generated catch block</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            e.printStackTrace();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        } <span style="font-weight: bold; color: #7f0055;">catch</span> (BadPaddingException e) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #808000;">// <span style="font-weight: bold; color: #7f9fbf;">TODO</span> Auto-generated catch block</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            e.printStackTrace();</span></div><br><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        }</span><br><br></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';"> </span></div><br><div><span style="font-size: 11pt;"><span style="color: #993366; font-family: 'Lucida Console';">AES进行文件加密：</span></span></div><br><div><br><div><!--WizRtf2Html Charset=0 --><span style="font-family: 'YaHei Consolas Hybrid'; font-size: 10.5pt; line-height: 1.5;">    </span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: 10.5pt; line-height: 1.5;">    </span><span style="color: #3f5fbf; font-family: 'YaHei Consolas Hybrid'; font-size: 11pt; line-height: 1.5;">/<strong><strong><strong><strong>*</strong></strong></strong></strong></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'YaHei Consolas Hybrid';">         <em> AES数据加密    </em></span></div><br><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'YaHei Consolas Hybrid';">         <strong><strong><strong><strong>*</strong></strong></strong></strong>/</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">        <span style="font-weight: bold; color: #7f0055;">try</span> {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            String ab = <span style="color: #2a00ff;">“我只是要做一下测试而已，不至于 吧？”</span>;</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            String file = <span style="color: #2a00ff;">“C://users/admin/Desktop/test”</span>;</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 密钥生成器 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            KeyGenerator kg = KeyGenerator.<span style="font-style: italic;">getInstance</span>(<span style="color: #2a00ff;">“AES”</span>);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 初始化密钥生成器，AES长度必须是128、256、512中的一个 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            kg.init(128, <span style="font-weight: bold; color: #7f0055;">new</span> SecureRandom(<span style="color: #2a00ff;">“12134”</span>.getBytes()));</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 生成密钥 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            SecretKey sk = kg.generateKey();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 得到密钥的<span style="text-decoration: underline;">Spec</span> </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            </span><span style="font-size: 11pt; font-family: 'YaHei Consolas Hybrid';"><span style="color: #8b8b00;">// SecretKeySpec <span style="text-decoration: underline;">sks</span> = <span style="font-weight: bold;">new</span> SecretKeySpec(sk.getEncoded(), “AES”);</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 得到加密工具 Cipher，以 AES为算法 ，ECB为模式， PKCS5Padding为填充模式 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            Cipher cipher = Cipher.<span style="font-style: italic;">getInstance</span>(<span style="color: #2a00ff;">“AES/ECB/PKCS5Padding”</span>);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 初始化加密工具 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            cipher.init(Cipher.<span style="font-style: italic; color: #0000c0;">ENCRYPT_MODE</span>, sk);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 文件流 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            FileOutputStream fos = <span style="font-weight: bold; color: #7f0055;">new</span> FileOutputStream(file);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 使用加密流包装文件流 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            CipherOutputStream cos = <span style="font-weight: bold; color: #7f0055;">new</span> CipherOutputStream(fos, cipher);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 写出数据 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            cos.write(ab.getBytes());</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 刷新流 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            cos.flush();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            cos.close();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 初始化加密工具为解密 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            cipher.init(Cipher.<span style="font-style: italic; color: #0000c0;">DECRYPT_MODE</span>, sk);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 文件输入流 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            FileInputStream fis = <span style="font-weight: bold; color: #7f0055;">new</span> FileInputStream(file);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 使用加密流包装文件输入流 </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            CipherInputStream cis = <span style="font-weight: bold; color: #7f0055;">new</span> CipherInputStream(fis, cipher);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">/<em> 读取文件数据，解密并且转为String </em>/</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="font-weight: bold; color: #7f0055;">byte</span>[] buf = <span style="font-weight: bold; color: #7f0055;">new</span> <span style="font-weight: bold; color: #7f0055;">byte</span>[1024];</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="font-weight: bold; color: #7f0055;">int</span> len = 0;</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            ByteArrayOutputStream baos = <span style="font-weight: bold; color: #7f0055;">new</span> ByteArrayOutputStream();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="font-weight: bold; color: #7f0055;">while</span>( (len = cis.read(buf)) != -1) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">                baos.write(buf, 0, len);</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            }</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            System.<span style="font-style: italic; color: #0000c0;">out</span>.println(<span style="font-weight: bold; color: #7f0055;">new</span> String(baos.toByteArray()));</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            cis.close();</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">        } <span style="font-weight: bold; color: #7f0055;">catch</span> (Exception e) {</span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            <span style="color: #771c1e;">// <span style="font-weight: bold; color: #7f9fbf;">TODO</span> Auto-generated catch block</span></span></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">            e.printStackTrace();</span></div><br><span style="font-size: 11pt; color: windowtext; font-family: 'YaHei Consolas Hybrid';">        }</span><br><br></div><br><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';"> </span></div>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/30/e8-87-aa-e5-ae-9a-e4-b9-89spinner-e5-bc-b9-e6-a1-86-e7-9a-84-e5-8a-a8-e7-94-bb-2/" rel="next" title="自定义Spinner弹框的动画">
+                <i class="fa fa-chevron-left"></i> 自定义Spinner弹框的动画
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/01/e6-90-ad-e5-bb-ba-e8-87-aa-e5-b7-b1-e7-9a-84maven-e6-9c-8d-e5-8a-a1-e5-99-a8-e7-bb-99-e5-86-85-e9-83-a8-e9-a1-b9-e7-9b-ae-e4-bd-bf-e7-94-a8-md/" rel="prev" title="搭建自己的maven服务器给内部项目使用">
+                搭建自己的maven服务器给内部项目使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Eraise" />
+          <p class="site-author-name" itemprop="name">Eraise</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eraise</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

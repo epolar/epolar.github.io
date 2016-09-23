@@ -1,0 +1,995 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android悬浮窗,WindowManager,悬浮窗," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="悬浮窗是把控件添加到WindowManager并且设置其 WindowManager.Layoutparams设置为包含控件大小、类型为ALERT等可弹出的等。
+悬浮窗用处很多，其中包括：ListView/GridView的拖动、Toast等
+ 
+/**
+ * 在 manifest.xml 中应该配置权限 android.permission.SYSTEM_ALERT_WINDOW
+ * 为了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="只在主界面应用上显示的悬浮窗">
+<meta property="og:url" content="http://eraise.xyz/2015/10/28/e5-8f-aa-e5-9c-a8-e4-b8-bb-e7-95-8c-e9-9d-a2-e5-ba-94-e7-94-a8-e4-b8-8a-e6-98-be-e7-a4-ba-e7-9a-84-e6-82-ac-e6-b5-ae-e7-aa-97/index.html">
+<meta property="og:site_name" content="我吃西瓜">
+<meta property="og:description" content="悬浮窗是把控件添加到WindowManager并且设置其 WindowManager.Layoutparams设置为包含控件大小、类型为ALERT等可弹出的等。
+悬浮窗用处很多，其中包括：ListView/GridView的拖动、Toast等
+ 
+/**
+ * 在 manifest.xml 中应该配置权限 android.permission.SYSTEM_ALERT_WINDOW
+ * 为了">
+<meta property="og:updated_time" content="2016-09-23T01:49:15.841Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="只在主界面应用上显示的悬浮窗">
+<meta name="twitter:description" content="悬浮窗是把控件添加到WindowManager并且设置其 WindowManager.Layoutparams设置为包含控件大小、类型为ALERT等可弹出的等。
+悬浮窗用处很多，其中包括：ListView/GridView的拖动、Toast等
+ 
+/**
+ * 在 manifest.xml 中应该配置权限 android.permission.SYSTEM_ALERT_WINDOW
+ * 为了">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://eraise.xyz/2015/10/28/e5-8f-aa-e5-9c-a8-e4-b8-bb-e7-95-8c-e9-9d-a2-e5-ba-94-e7-94-a8-e4-b8-8a-e6-98-be-e7-a4-ba-e7-9a-84-e6-82-ac-e6-b5-ae-e7-aa-97/"/>
+
+  <title> 只在主界面应用上显示的悬浮窗 | 我吃西瓜 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">我吃西瓜</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">一念红尘，一念空门</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                只在主界面应用上显示的悬浮窗
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-28T20:45:28+08:00" content="2015-10-28">
+              2015-10-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><script id="wiz_editor_localize" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\localize.js?t=1446036111862" type="text/javascript" charset="utf-8"></script><script id="wizEditor" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\plugins\wizEditor.js?t=1446036111875" type="text/javascript" charset="utf-8"></script><script id="wizEditorHelper" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\plugins\editor_helper.js?t=1446036111892" type="text/javascript" charset="utf-8"></script></p>
+<p><div></div></p>
+<p><div><span style="color: #3366ff; font-family: Consolas;"><span style="font-size: 15px; line-height: 22px;"><strong>悬浮窗是把控件添加到WindowManager并且设置其 WindowManager.Layoutparams设置为包含控件大小、类型为ALERT等可弹出的等。</strong></span></span></div></p>
+<p><div><span style="color: #3366ff; font-family: Consolas;"><span style="font-size: 15px; line-height: 22px;"><strong>悬浮窗用处很多，其中包括：ListView/GridView的拖动、Toast等</strong></span></span></div></p>
+<p><div><span style="color: #3f5fbf; font-family: Consolas;"><span style="font-size: 15px; line-height: 22px;"> </span></span></div></p>
+<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">/**</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"> * 在 manifest.xml 中应该配置权限 android.permission.SYSTEM_ALERT_WINDOW</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"> * 为了只在主界面应用才显示，需要获取任务栈，</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"> * 需要权限 android.permission.GET_TASKS</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"> * 把悬浮窗布局/控件添加到 WindowManager 上，</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"> * 并且设置 WindowManager.LayoutParams 即可，</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"> * 通过监听触摸事件，并且更新 WindowManager.LayoutParams 的x,y就可以更新位置</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"> * <span style="font-weight: bold; color: #7f9fbf;">@author</span>: 思落羽</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"> * <span style="font-weight: bold; color: #7f9fbf;">@date</span>: 2014<span style="color: #7f7f9f;">-</span>2<span style="color: #7f7f9f;">-</span>12</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"> * <span style="font-weight: bold; color: #7f9fbf;">@Description</span>:</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"> */</span></div></p>
+<p><div><span style="font-weight: bold; font-size: 11pt; color: #7f0055; font-family: 'Consolas';">public<span style="font-weight: normal; color: windowtext;"> </span>class<span style="font-weight: normal; color: windowtext;"> SuspendButtonService </span>extends<span style="font-weight: normal; color: windowtext;"> Service {</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">public</span> <span style="font-weight: bold; color: #7f0055;">static</span> <span style="font-weight: bold; color: #7f0055;">final</span> String <span style="font-style: italic; color: #0000c0;">ACTION_OPERATE</span> = <span style="color: #2a00ff;">“action_operate”</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">public</span> <span style="font-weight: bold; color: #7f0055;">static</span> <span style="font-weight: bold; color: #7f0055;">final</span> <span style="font-weight: bold; color: #7f0055;">short</span> <span style="font-style: italic; color: #0000c0;">OPERATE_SHOW</span> = 1;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">public</span> <span style="font-weight: bold; color: #7f0055;">static</span> <span style="font-weight: bold; color: #7f0055;">final</span> <span style="font-weight: bold; color: #7f0055;">short</span> <span style="font-style: italic; color: #0000c0;">OPERATE_HIDE</span> = 2;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> <span style="font-weight: bold; color: #7f0055;">boolean</span> <span style="color: #0000ff;">added</span> = <span style="font-weight: bold; color: #7f0055;">false</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> <span style="font-weight: bold; color: #7f0055;">boolean</span> <span style="color: #0000ff;">show</span> = <span style="font-weight: bold; color: #7f0055;">false</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> WindowManager.LayoutParams <span style="color: #0000ff;">wmParams</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #3f5fbf;">/**</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     * 检查当前是否为主界面应用</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     */</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> Handler <span style="color: #0000ff;">hCheckMain</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #3f5fbf;">/**</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     * 主界面包名</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     */</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> List&lt;String&gt; <span style="color: #0000ff;">homeNames</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> Button <span style="color: #0000ff;">btn</span>;</span></div></p>
+<p><div></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #646464;">@Override</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">public</span> IBinder onBind(Intent intent) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">return</span> <span style="font-weight: bold; color: #7f0055;">null</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #646464;">@Override</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">public</span> <span style="font-weight: bold; color: #7f0055;">void</span> onCreate() {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">super</span>.onCreate();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        init();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #646464;">@Override</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">public</span> <span style="font-weight: bold; color: #7f0055;">void</span> onStart(Intent intent, <span style="font-weight: bold; color: #7f0055;">int</span> startId) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">if</span> (intent != <span style="font-weight: bold; color: #7f0055;">null</span>) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 获取操作来确定当前应该显示或是取消显示 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">short</span> operate = intent.getShortExtra(<span style="font-style: italic; color: #0000c0;">ACTION_OPERATE</span>, (<span style="font-weight: bold; color: #7f0055;">short</span>)0);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">switch</span>(operate) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">case</span> <span style="font-style: italic; color: #0000c0;">OPERATE_SHOW</span>:</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="color: #0000ff;">added</span> = <span style="font-weight: bold; color: #7f0055;">true</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                show();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="font-weight: bold; color: #7f0055;">break</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">case</span> <span style="font-style: italic; color: #0000c0;">OPERATE_HIDE</span>:</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="color: #0000ff;">added</span> = <span style="font-weight: bold; color: #7f0055;">false</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                hide();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="font-weight: bold; color: #7f0055;">break</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #3f5fbf;">/**</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     * 初始化共用的对象</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     */</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> <span style="font-weight: bold; color: #7f0055;">void</span> init() {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #a4ac02;">/* 2003是 WindowManager.LayoutParams.TYPE_SySTEM_ALERT 的值</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #a4ac02; font-family: 'Consolas';">         <em> 初始化 WindowManager.LayoutParams </em>/</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #0000ff;">wmParams</span> = <span style="font-weight: bold; color: #7f0055;">new</span> WindowManager.LayoutParams(WindowManager.LayoutParams.<span style="font-style: italic; color: #0000c0;">WRAP_CONTENT</span>,</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                WindowManager.LayoutParams.<span style="font-style: italic; color: #0000c0;">WRAP_CONTENT</span>, 2003, </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                WindowManager.LayoutParams.<span style="font-style: italic; color: #0000c0;">FLAG_NOT_FOCUSABLE</span>,</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                PixelFormat.<span style="font-style: italic; color: #0000c0;">RGBA_8888</span>); <span style="color: #808000;">// 类型要为透明才不会把背景也覆盖掉</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #a4ac02;">/<em> 获取悬浮窗控件 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #0000ff;">btn</span> = (Button) LayoutInflater.<span style="font-style: italic;">from</span>(<span style="font-weight: bold; color: #7f0055;">this</span>)</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                .inflate(R.layout.<span style="font-style: italic; color: #0000c0;">demo_suspend_button</span>, <span style="font-weight: bold; color: #7f0055;">null</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #0000ff;">btn</span>.setOnTouchListener(<span style="font-weight: bold; color: #7f0055;">new</span> TouchBtn());</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #0000ff;">btn</span>.setOnClickListener(<span style="font-weight: bold; color: #7f0055;">new</span> OnClickListener() {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #646464;">@Override</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">public</span> <span style="font-weight: bold; color: #7f0055;">void</span> onClick(View v) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                Toast.<span style="font-style: italic;">makeText</span>(SuspendButtonService.<span style="font-weight: bold; color: #7f0055;">this</span>, <span style="color: #2a00ff;">“点击了悬浮窗”</span>, Toast.<span style="font-style: italic; color: #0000c0;">LENGTH_SHORT</span>).show();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        });</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #3f5fbf;">/**</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     * 获取到桌面应用的应用名称</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     * <span style="font-weight: bold; color: #7f9fbf;">@return</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     */</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> List&lt;String&gt; getHomes() {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        List&lt;String&gt; names = <span style="font-weight: bold; color: #7f0055;">new</span> LinkedList&lt;String&gt;();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        PackageManager packageManager = getPackageManager();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #a4ac02;">/* 找出action为 Intent.ACTION_MAIN，</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #a4ac02; font-family: 'Consolas';">         <em> Category为Intent.CATEGORY_HOME的包的包名，这个包就是主界面的包 </em>/</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        Intent intent = <span style="font-weight: bold; color: #7f0055;">new</span> Intent(Intent.<span style="font-style: italic; color: #0000c0;">ACTION_MAIN</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        intent.addCategory(Intent.<span style="font-style: italic; color: #0000c0;">CATEGORY_HOME</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #a4ac02;">/<em> 查找intent可以唤醒的Activity的信息 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        List&lt;ResolveInfo&gt; resolveInfos = packageManager</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                .queryIntentActivities(intent, PackageManager.<span style="font-style: italic; color: #0000c0;">MATCH_DEFAULT_ONLY</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">for</span> (ResolveInfo resolveInfo : resolveInfos) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            names.add(resolveInfo.<span style="color: #0000ff;">activityInfo</span>.<span style="color: #0000ff;">packageName</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">return</span> names;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #3f5fbf;">/**</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     * 把悬浮窗添加到 WindowManager上</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     */</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> <span style="font-weight: bold; color: #7f0055;">void</span> show() {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">if</span> (!<span style="color: #0000ff;">show</span>) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #0000ff;">show</span> = <span style="font-weight: bold; color: #7f0055;">true</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 获取 WindowManager </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            WindowManager wm = (WindowManager) getSystemService(Service.<span style="font-style: italic; color: #0000c0;">WINDOW_SERVICE</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            wm.addView(<span style="color: #0000ff;">btn</span>, <span style="color: #0000ff;">wmParams</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            checkMain();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #3f5fbf;">/**</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     * 把悬浮穿从 WindowManager 上移除</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     */</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> <span style="font-weight: bold; color: #7f0055;">void</span> hide() {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">if</span> (<span style="color: #0000ff;">show</span>) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #0000ff;">show</span> = <span style="font-weight: bold; color: #7f0055;">false</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 获取 WindowManager </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            WindowManager wm = (WindowManager) getSystemService(Service.<span style="font-style: italic; color: #0000c0;">WINDOW_SERVICE</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            wm.removeView(<span style="color: #0000ff;">btn</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #3f5fbf;">/**</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     * 检查当前界面是否在主界面，悬浮穿控件为只在主界面显示</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     */</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> <span style="font-weight: bold; color: #7f0055;">void</span> checkMain() {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #a4ac02;">/<em> hCheckMain 为空就新建 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">if</span> (<span style="color: #0000ff;">hCheckMain</span> == <span style="font-weight: bold; color: #7f0055;">null</span>) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #0000ff;">homeNames</span> = getHomes();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #0000ff;">hCheckMain</span> = <span style="font-weight: bold; color: #7f0055;">new</span> Handler(<span style="font-weight: bold; color: #7f0055;">new</span> Handler.Callback() {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="color: #646464;">@Override</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="font-weight: bold; color: #7f0055;">public</span> <span style="font-weight: bold; color: #7f0055;">boolean</span> handleMessage(Message msg) {</span></div></p>
+<p><div></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                    <span style="font-weight: bold; color: #7f0055;">if</span> (isHome()) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                        <span style="font-weight: bold; color: #7f0055;">if</span> (!<span style="color: #0000ff;">show</span>)</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                            show();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                    } <span style="font-weight: bold; color: #7f0055;">else</span> {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                        <span style="font-weight: bold; color: #7f0055;">if</span> (<span style="color: #0000ff;">show</span>)</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                            hide();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                    <span style="font-weight: bold; color: #7f0055;">if</span> (<span style="color: #0000ff;">added</span>) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                        <span style="color: #a4ac02;">/<em> 1秒后扫描当前是否需要显示 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                        <span style="color: #0000ff;">hCheckMain</span>.sendEmptyMessageDelayed(0, 1000);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                    <span style="font-weight: bold; color: #7f0055;">return</span> <span style="font-weight: bold; color: #7f0055;">true</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            });</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #a4ac02;">/<em> 1秒扫描一次当前是否在主界面 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #0000ff;">hCheckMain</span>.sendEmptyMessageDelayed(0, 1000);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="color: #3f5fbf;">/**</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     * 当前界面是否为主界面</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     * <span style="font-weight: bold; color: #7f9fbf;">@return</span> 为Home界面则返回true，否则为false</span></div></p>
+<p><div><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';">     */</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> <span style="font-weight: bold; color: #7f0055;">boolean</span> isHome() {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #a4ac02;">/<em> 获取 ActivityManager ，检查是否存在主界面 </em>/</span> </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        ActivityManager activityManager = </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                (ActivityManager) getSystemService(Context.<span style="font-style: italic; color: #0000c0;">ACTIVITY_SERVICE</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #a4ac02;">/<em> 获取当前正在运行的任务 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        List&lt;RunningTaskInfo&gt; infos = activityManager.getRunningTasks(1);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #a4ac02;">/<em> 主界面是否包含了当前正在运行的任务的包名 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #a4ac02;">/<em> RunningTaskInfo 是任务栈信息，得到栈顶的Activity再去获取期包名 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">return</span> <span style="color: #0000ff;">homeNames</span>.contains(infos.get(0).<span style="color: #0000ff;">topActivity</span>.getPackageName());</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    <span style="font-weight: bold; color: #7f0055;">protected</span> <span style="font-weight: bold; color: #7f0055;">class</span> TouchBtn <span style="font-weight: bold; color: #7f0055;">implements</span> OnTouchListener {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">float</span> <span style="color: #0000ff;">x</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">float</span> <span style="color: #0000ff;">y</span>;</span></div></p>
+<p><div></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="color: #646464;">@Override</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">public</span> <span style="font-weight: bold; color: #7f0055;">boolean</span> onTouch(View v, MotionEvent event) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">switch</span> (event.getAction()) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">case</span> MotionEvent.<span style="font-style: italic; color: #0000c0;">ACTION_DOWN</span>:</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                down(v, event);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="font-weight: bold; color: #7f0055;">break</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">case</span> MotionEvent.<span style="font-style: italic; color: #0000c0;">ACTION_UP</span>:</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                up(v, event);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="font-weight: bold; color: #7f0055;">break</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">case</span> MotionEvent.<span style="font-style: italic; color: #0000c0;">ACTION_MOVE</span>:</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                move(v, event);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="font-weight: bold; color: #7f0055;">break</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">return</span> <span style="font-weight: bold; color: #7f0055;">true</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">void</span> down(View v, MotionEvent event) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 按下时记录按下的坐标 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #0000ff;">x</span> = event.getX();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #0000ff;">y</span> = event.getY();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">void</span> up(View v, MotionEvent event) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="font-weight: bold; color: #7f0055;">if</span> (<span style="color: #0000ff;">x</span> == event.getX() &amp;&amp; <span style="color: #0000ff;">y</span> == event.getY()) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                <span style="color: #a4ac02;">/<em> 松开与点下的x y不变，视为点击 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">                v.performClick();</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        <span style="font-weight: bold; color: #7f0055;">void</span> move(View v, MotionEvent event) {</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 获取 WindowManager </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            WindowManager wm = (WindowManager) getSystemService(Service.<span style="font-style: italic; color: #0000c0;">WINDOW_SERVICE</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 设置新的x y的值 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #0000ff;">wmParams</span>.<span style="color: #0000ff;">x</span> += event.getX() - <span style="color: #0000ff;">x</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #0000ff;">wmParams</span>.<span style="color: #0000ff;">y</span> += event.getY() - <span style="color: #0000ff;">y</span>;</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            <span style="color: #a4ac02;">/<em> 更新位置 </em>/</span></span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">            wm.updateViewLayout(v, <span style="color: #0000ff;">wmParams</span>);</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        }</span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">        </span></div></p>
+<p><div><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">    }</span></div></p>
+<p><div></div><br><span style="font-size: 11pt; color: windowtext; font-family: 'Consolas';">}</span></p>
+<p><br>&nbsp;</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android悬浮窗/" rel="tag">#Android悬浮窗</a>
+          
+            <a href="/tags/WindowManager/" rel="tag">#WindowManager</a>
+          
+            <a href="/tags/悬浮窗/" rel="tag">#悬浮窗</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/28/ksoap2-e8-bf-9e-e6-8e-a5-webservice/" rel="next" title="ksoap2 连接 webservice">
+                <i class="fa fa-chevron-left"></i> ksoap2 连接 webservice
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/28/imagespan-e5-8f-af-e7-82-b9-e5-87-bb-e3-80-81-e5-9b-be-e7-89-87-e4-b8-8e-e8-ae-be-e7-bd-ae-e4-b8-8d-e4-b8-80-e6-a0-b7-e5-a4-a7/" rel="prev" title="ImageSpan 可点击、图片与设置不一样大">
+                ImageSpan 可点击、图片与设置不一样大 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Eraise" />
+          <p class="site-author-name" itemprop="name">Eraise</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eraise</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

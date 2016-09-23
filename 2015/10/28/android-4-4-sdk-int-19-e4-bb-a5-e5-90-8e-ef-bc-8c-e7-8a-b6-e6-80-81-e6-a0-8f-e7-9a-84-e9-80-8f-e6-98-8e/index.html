@@ -1,0 +1,840 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="statusbar,状态栏透明," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="4.4以后才支持的沉浸式ActionBar+StatusBar。
+在Java代码中，可以通过
+
+getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | 
+                                     WindowManager.LayoutParams.FLAG_TRANSL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 4.4 (SDK_INT >= 19) 以后，状态栏的透明">
+<meta property="og:url" content="http://eraise.xyz/2015/10/28/android-4-4-sdk-int-19-e4-bb-a5-e5-90-8e-ef-bc-8c-e7-8a-b6-e6-80-81-e6-a0-8f-e7-9a-84-e9-80-8f-e6-98-8e/index.html">
+<meta property="og:site_name" content="我吃西瓜">
+<meta property="og:description" content="4.4以后才支持的沉浸式ActionBar+StatusBar。
+在Java代码中，可以通过
+
+getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | 
+                                     WindowManager.LayoutParams.FLAG_TRANSL">
+<meta property="og:image" content="http://www.eraise.xyz/wp-content/uploads/2015/10/84d2ab13-2c75-491f-a2b6-50e5e88e820b-169x300.png">
+<meta property="og:image" content="http://www.eraise.xyz/wp-content/uploads/2015/10/6717b0fc-9466-4a94-a984-d2c549ac3b47-169x300.png">
+<meta property="og:image" content="http://www.eraise.xyz/wp-content/uploads/2015/10/42b0849f-e051-47bc-87b8-fd88ccb105e4-169x300.jpg">
+<meta property="og:updated_time" content="2016-09-23T01:49:15.841Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 4.4 (SDK_INT >= 19) 以后，状态栏的透明">
+<meta name="twitter:description" content="4.4以后才支持的沉浸式ActionBar+StatusBar。
+在Java代码中，可以通过
+
+getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | 
+                                     WindowManager.LayoutParams.FLAG_TRANSL">
+<meta name="twitter:image" content="http://www.eraise.xyz/wp-content/uploads/2015/10/84d2ab13-2c75-491f-a2b6-50e5e88e820b-169x300.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://eraise.xyz/2015/10/28/android-4-4-sdk-int-19-e4-bb-a5-e5-90-8e-ef-bc-8c-e7-8a-b6-e6-80-81-e6-a0-8f-e7-9a-84-e9-80-8f-e6-98-8e/"/>
+
+  <title> Android 4.4 (SDK_INT >= 19) 以后，状态栏的透明 | 我吃西瓜 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">我吃西瓜</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">一念红尘，一念空门</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android 4.4 (SDK_INT >= 19) 以后，状态栏的透明
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-28T21:05:09+08:00" content="2015-10-28">
+              2015-10-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script id="wiz_editor_localize" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\localize.js?t=1446037758905" type="text/javascript" charset="utf-8"></script><script id="wizEditor" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\plugins\wizEditor.js?t=1446037758911" type="text/javascript" charset="utf-8"></script><script id="wizEditorHelper" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\plugins\editor_helper.js?t=1446037758935" type="text/javascript" charset="utf-8"></script>
+
+<p>4.4以后才支持的沉浸式<span style="color: #ff0000;">ActionBar+StatusBar</span>。</p>
+<p><div>在Java代码中，可以通过</div></p>
+<p><div></div></p>
+<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #bed6ff; font-family: 微软雅黑; background-color: #000000;">getWindow<span style="color: #d8d8d8;">().<span style="color: #ffffff;">setFlags</span>(<span style="text-decoration: underline; color: #d197d9;">WindowManager<span style="color: #d8d8d8;">.<span style="color: #d25252;">LayoutParams</span>.<span style="font-style: italic; color: #efc090;">FLAG_TRANSLUCENT_STATUS</span></span></span> | </span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #bed6ff; font-family: 微软雅黑; background-color: #000000;"><span style="color: #d8d8d8;"><span style="text-decoration: underline; color: #d197d9;">                                     WindowManager<span style="color: #d8d8d8;">.<span style="color: #d25252;">LayoutParams</span>.<span style="font-style: italic; color: #efc090;">FLAG_TRANSLUCENT_NAVIGATION</span></span></span>,</span></span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';">                        <span style="text-decoration: underline; color: #d197d9;">WindowManager<span style="color: #d8d8d8;">.<span style="color: #d25252;">LayoutParams</span>.<span style="font-style: italic; color: #efc090;">FLAG_TRANSLUCENT_NAVIGATION</span></span></span> |</span></span><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';">                                                         <span style="text-decoration: underline; color: #d197d9;">WindowManager<span style="color: #d8d8d8;">.<span style="color: #d25252;">LayoutParams</span>.<span style="font-style: italic; color: #efc090;">FLAG_TRANSLUCENT_STATUS</span></span></span>);</span> </span></p>
+<p></p>
+<p><div>进行设置，另外还有一种方法，效果和这个不一样，它是全屏的，状态栏透明且可以下滑：</div></p>
+<p><div></div></p>
+<p><div><!--WizRtf2Html Charset=0 --><span style="text-decoration: underline; font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">mDecorView<span style="text-decoration: none;">.setSystemUiVisibility(</span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_LAYOUT_STABLE</span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                | <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                | <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                | <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_HIDE_NAVIGATION</span> <span style="color: #c7dd0c;">// hide <span style="text-decoration: underline;">nav</span> bar</span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                | <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_FULLSCREEN</span> <span style="color: #c7dd0c;">// hide status bar</span></span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';">                | <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_IMMERSIVE</span>);</span>  </span></p>
+<p></p>
+<p><div>在 <span style="color: #0000ff;">xml style </span>中的设置方式：</div></p>
+<p><div></div></p>
+<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #79abff; font-family: 微软雅黑; background-color: #000000;">&lt;<span style="color: #bed6ff;">item<span style="color: windowtext;"> </span>name<span style="color: #d8d8d8;">=<span style="color: #ffc600;">“android:windowTranslucentStatus”</span></span></span>&gt;<span style="color: #d8d8d8;">true</span>&lt;/<span style="color: #bed6ff;">item</span>&gt;</span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';"><span style="color: #79abff;">&lt;<span style="color: #bed6ff;">item<span style="color: windowtext;"> </span>name</span></span>=<span style="color: #ffc600;">“android:windowTranslucentNavigation”<span style="color: #79abff;">&gt;</span></span>true<span style="color: #79abff;">&lt;/<span style="color: #bed6ff;">item</span>&gt;</span></span>  </span></p>
+<p></p>
+<p><div>不过在 <span style="color: #0000ff;">xml </span>中，不知道出于什么原因，我继承 AppTheme 后，给一个<span style="color: #0000ff;">Activity</span>(不是<span style="color: #0000ff;">Application</span>) 设置了这个<span style="color: #0000ff;">style</span>，结果无效。</div></p>
+<p><div>在5.0中，可以设置标题栏颜色：</div></p>
+<p><div></div></p>
+<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #79abff; font-family: 微软雅黑; background-color: #000000;">&lt;<span style="color: #bed6ff;">item<span style="color: windowtext;"> </span>name<span style="color: #d8d8d8;">=<span style="color: #ffc600;">“android:colorPrimary”</span></span></span>&gt;<span style="color: #d8d8d8;">?attr/bg_title_color</span>&lt;/<span style="color: #bed6ff;">item</span>&gt; </span><span style="font-size: 10pt; font-family: 微软雅黑; background-color: #000000;"><span style="color: #3cb371;">// ActionBar</span></span></div></p>
+<p><div><span style="font-size: 10pt; font-family: 微软雅黑; background-color: #000000;"><span style="color: #79abff;">&lt;<span style="color: #bed6ff;">item<span style="color: windowtext;"> </span>name</span></span><span style="color: #d8d8d8;">=</span><span style="color: #ffc600;">“android:colorPrimaryDark”<span style="color: #79abff;">&gt;</span></span><span style="color: #d8d8d8;">?attr/bg_title_color</span><span style="color: #79abff;">&lt;/<span style="color: #bed6ff;">item</span>&gt;  </span><span style="color: #3cb371;">// 状态栏</span></span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; font-family: 微软雅黑;"><span style="color: #79abff;">&lt;<span style="color: #bed6ff;">item<span style="color: windowtext;"> </span>name</span></span><span style="color: #d8d8d8;">=</span><span style="color: #ffc600;">“android:navigationBarColor”<span style="color: #79abff;">&gt;</span></span><span style="color: #d8d8d8;">?attr/bg_title_color</span><span style="color: #79abff;">&lt;/<span style="color: #bed6ff;">item</span>&gt; </span><span style="color: #3cb371;">// 导航栏</span></span> </span></p>
+<p></p>
+<p><div>这些基于原生的设置，可能不是很方便(简单的说呢，就是使用 translucentStatus 的时候，布局会跑到状态栏背后)，可能需要添加一个View或设置Margin/Padding来让它不跑上去，这就需要获取ActionBar的高度及StausBar的高度了：</div></p>
+<p><div>各系统控件的高度代码获取(代码取自 SystemBarTint 的 SystemBarConfig)：</div></p>
+<p><div></div></p>
+<p><div><!--WizRtf2Html Charset=0 --><span style="font-weight: bold; font-size: 10pt; font-family: 微软雅黑; background-color: #000000;"><span style="color: #ffffff;">private</span><span style="color: #d8d8d8; font-weight: normal;"> </span><span style="color: #ffffff;">static</span><span style="color: #d8d8d8; font-weight: normal;"> </span><span style="color: #ffffff;">final</span><span style="color: #d8d8d8; font-weight: normal;"> <span style="color: #d25252;">String</span> <span style="font-style: italic; text-decoration: underline; color: #efc090;">STATUS_BAR_HEIGHT_RES_NAME</span> = <span style="color: #ffc600;">“status_bar_height”</span>; </span><span style="font-weight: normal;"><span style="color: #3cb371;">// 状态栏高度</span></span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">    <span style="font-weight: bold; color: #ffffff;">private</span> <span style="font-weight: bold; color: #ffffff;">static</span> <span style="font-weight: bold; color: #ffffff;">final</span> <span style="color: #d25252;">String</span> <span style="font-style: italic; text-decoration: underline; color: #efc090;">NAV_BAR_HEIGHT_RES_NAME</span> = <span style="color: #ffc600;">“navigation_bar_height”</span>; </span><span style="font-size: 10pt; font-family: 微软雅黑; background-color: #000000;"><span style="color: #3cb371;"> // 导航栏高度</span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">    <span style="font-weight: bold; color: #ffffff;">private</span> <span style="font-weight: bold; color: #ffffff;">static</span> <span style="font-weight: bold; color: #ffffff;">final</span> <span style="color: #d25252;">String</span> <span style="font-style: italic; text-decoration: underline; color: #efc090;">NAV_BAR_HEIGHT_LANDSCAPE_RES_NAME</span> = <span style="color: #ffc600;">“navigation_bar_height_landscape”</span>;</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">    <span style="font-weight: bold; color: #ffffff;">private</span> <span style="font-weight: bold; color: #ffffff;">static</span> <span style="font-weight: bold; color: #ffffff;">final</span> <span style="color: #d25252;">String</span> <span style="font-style: italic; text-decoration: underline; color: #efc090;">NAV_BAR_WIDTH_RES_NAME</span> = <span style="color: #ffc600;">“navigation_bar_width”</span>;</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">    <span style="font-weight: bold; color: #ffffff;">private</span> <span style="font-weight: bold; color: #ffffff;">int</span> <span style="font-weight: bold; color: #ffffff;">getInternalDimensionSize</span>(<span style="text-decoration: underline; color: #d25252;">Resources</span> <span style="color: #79abff;">res</span>, <span style="color: #d25252;">String</span> <span style="color: #79abff;">key</span>) {</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">        <span style="font-weight: bold; color: #ffffff;">int</span> <span style="font-weight: bold; color: #bed6ff;">result</span> = <span style="color: #7fb347;">0</span>;</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">        <span style="font-weight: bold; color: #ffffff;">int</span> <span style="font-weight: bold; color: #bed6ff;">resourceId</span> = <span style="color: #79abff;">res</span>.getIdentifier(<span style="color: #79abff;">key</span>, <span style="color: #ffc600;">“dimen”</span>, <span style="color: #ffc600;">“android”</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">        <span style="font-weight: bold; color: #ffffff;">if</span> (<span style="color: #79abff;">resourceId</span> &gt; <span style="color: #7fb347;">0</span>) {</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #79abff;">result</span> = <span style="color: #79abff;">res</span>.getDimensionPixelSize(<span style="color: #79abff;">resourceId</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">        }</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">        <span style="font-weight: bold; color: #ffffff;">return</span> <span style="color: #79abff;">result</span>;</span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';">    }</span>  </span></p>
+<p></p>
+<p><div></div></p>
+<p><div>或通过开源项目 <a href="http://https://github.com/jgilfelt/systembartint" target="_blank" rel="external">SystemBarTint </a>可以达到一个相对不错的效果，SystemBarTint 设置沉浸式以后，添加代码：</div></p>
+<p><div></div></p>
+<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #bed6ff; font-family: 微软雅黑; background-color: #000000;">mSystemBarTintManager<span style="color: #d8d8d8;"> = <span style="font-weight: bold; color: #ffffff;">new</span> <span style="color: #ffffff;">SystemBarTintManager</span>(<span style="font-weight: bold; color: #ffffff;">this</span>);</span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"><span style="color: #bed6ff;">mSystemBarTintManager</span>.<span style="color: #ffffff;">setStatusBarTintEnabled</span>(<span style="font-weight: bold; color: #ffffff;">true</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"><span style="color: #bed6ff;">mSystemBarTintManager</span>.<span style="color: #ffffff;">setNavigationBarTintEnabled</span>(<span style="font-weight: bold; color: #ffffff;">true</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"> <span style="color: #c7dd0c;">// 获取到颜色</span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"><span style="color: #d25252;">TypedArray</span> <span style="font-weight: bold; color: #bed6ff;">_ta</span> = <span style="color: #bed6ff;">getTheme</span>().<span style="color: #ffffff;">obtainStyledAttributes</span>(<span style="color: #d25252;">YogaUtil</span>.<span style="font-style: italic; color: #bed6ff;">getInstance</span>().<span style="color: #ffffff;">getThemeResId</span>(), <span style="font-weight: bold; color: #ffffff;">new</span> <span style="font-weight: bold; color: #ffffff;">int</span>[]{<span style="color: #d25252;">R</span>.<span style="color: #d25252;">attr</span>.<span style="font-style: italic; color: #efc090;">bg_title_color</span>});</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"> <span style="color: #bed6ff;">mSystemBarTintManager</span>.<span style="color: #ffffff;">setStatusBarTintColor</span>(<span style="color: #79abff;">_ta</span>.<span style="color: #ffffff;">getColor</span>(<span style="color: #7fb347;">0</span>, <span style="color: #bed6ff;">getTitleColor</span>()));</span></div><br><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';"><span style="color: #79abff;"><span style="background-color: #000000;">_ta</span></span><span style="background-color: #000000;">.<span style="color: #ffffff;">recycle</span>();</span></span><span style="background-color: #000000;">  </span></p>
+<p></p>
+<p><div>达到效果：</div></p>
+<p><div><a href="http://www.eraise.xyz/wp-content/uploads/2015/10/84d2ab13-2c75-491f-a2b6-50e5e88e820b.png" target="_blank" rel="external"><img src="http://www.eraise.xyz/wp-content/uploads/2015/10/84d2ab13-2c75-491f-a2b6-50e5e88e820b-169x300.png" alt="84d2ab13-2c75-491f-a2b6-50e5e88e820b"></a></div></p>
+<p><div>SystemBarTint加通过类似代码:</div></p>
+<p><div></div></p>
+<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #c7dd0c;">// 状态栏透明</span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #d25252;">BaseActivity</span> <span style="font-weight: bold; color: #bed6ff;">_ba</span> = ((<span style="color: #d25252;">BaseActivity</span>) <span style="color: #79abff;">_activity</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #79abff;">_ba</span>.<span style="color: #ffffff;">getSystemBarTintManager</span>().<span style="color: #ffffff;">setStatusBarAlpha</span>(<span style="color: #7fb347;">0</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #bed6ff;">setTitle</span>(<span style="font-weight: bold; color: #ffffff;">null</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="font-weight: bold; color: #ffffff;">try</span> {</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="font-weight: bold; color: #ffffff;">if</span> (android.os.<span style="color: #d25252;">Build</span>.<span style="color: #d25252;">VERSION</span>.<span style="font-style: italic; color: #efc090;">SDK_INT</span> &gt;= android.os.<span style="color: #d25252;">Build</span>.<span style="color: #d25252;">VERSION_CODES</span>.<span style="font-style: italic; color: #efc090;">KITKAT</span>) {</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                    <span style="color: #79abff;">_activity</span>.<span style="color: #ffffff;">getActionBar</span>().<span style="color: #bed6ff;">setBackgroundDrawable</span>(<span style="color: #bed6ff;">getResources</span>().<span style="color: #d25252;">getDrawable</span>(<span style="color: #d25252;">R</span>.<span style="color: #d25252;">drawable</span>.<span style="font-style: italic; color: #efc090;">bg_transparent</span>));</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                }</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #c7dd0c;">// 设置按钮</span></span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #d25252;">View</span> <span style="font-weight: bold; color: #bed6ff;">_customView</span> = <span style="color: #79abff;">_activity</span>.<span style="color: #ffffff;">getActionBar</span>().<span style="color: #bed6ff;">getCustomView</span>();</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #d25252;">Button</span> <span style="font-weight: bold; color: #bed6ff;">_btnLeft</span> = (<span style="color: #d25252;">Button</span>) <span style="color: #79abff;">_customView</span>.<span style="color: #ffffff;">findViewById</span>(<span style="color: #d25252;">R</span>.<span style="color: #d25252;">id</span>.<span style="font-style: italic; color: #efc090;">btn_title_left</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnLeft</span>.<span style="color: #ffffff;">setText</span>(<span style="color: #d25252;">R</span>.<span style="color: #d25252;">string</span>.<span style="font-style: italic; color: #efc090;">xiamen</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnLeft</span>.<span style="color: #ffffff;">setOnClickListener</span>(<span style="font-weight: bold; color: #ffffff;">this</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnLeft</span>.<span style="color: #ffffff;">setVisibility</span>(<span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">VISIBLE</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #d25252;">Button</span> <span style="font-weight: bold; color: #bed6ff;">_btnRight</span> = (<span style="color: #d25252;">Button</span>) <span style="color: #79abff;">_customView</span>.<span style="color: #ffffff;">findViewById</span>(<span style="color: #d25252;">R</span>.<span style="color: #d25252;">id</span>.<span style="font-style: italic; color: #efc090;">btn_title_right</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnRight</span>.<span style="color: #ffffff;">setText</span>(<span style="color: #d25252;">R</span>.<span style="color: #d25252;">string</span>.<span style="font-style: italic; color: #efc090;">preference</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnRight</span>.<span style="color: #ffffff;">setOnClickListener</span>(<span style="font-weight: bold; color: #ffffff;">this</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnRight</span>.<span style="color: #ffffff;">setVisibility</span>(<span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">VISIBLE</span>);</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            } <span style="font-weight: bold; color: #ffffff;">catch</span> (<span style="color: #d25252;">Exception</span> <span style="font-weight: bold; color: #bed6ff;">e</span>) {</span></div></p>
+<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                </span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';">            }</span>  </span></p>
+<p></p>
+<p><div>我实现了效果：</div></p>
+<p><div>(4.1系统<span style="font-size: 10.5pt; line-height: 1.5;">)</span></div></p>
+<p><div><a href="http://www.eraise.xyz/wp-content/uploads/2015/10/6717b0fc-9466-4a94-a984-d2c549ac3b47.png" target="_blank" rel="external"><img src="http://www.eraise.xyz/wp-content/uploads/2015/10/6717b0fc-9466-4a94-a984-d2c549ac3b47-169x300.png" alt="6717b0fc-9466-4a94-a984-d2c549ac3b47"></a></div></p>
+<p><div>(4.4系统)</div></p>
+<p><div><a href="http://www.eraise.xyz/wp-content/uploads/2015/10/42b0849f-e051-47bc-87b8-fd88ccb105e4.jpg" target="_blank" rel="external"><img src="http://www.eraise.xyz/wp-content/uploads/2015/10/42b0849f-e051-47bc-87b8-fd88ccb105e4-169x300.jpg" alt="42b0849f-e051-47bc-87b8-fd88ccb105e4"></a></div></p>
+<p><div>参考资料：</div></p>
+<p><div><span style="font-family: 微软雅黑;">    官方对4.4沉浸式体验的教程：<a href="http://https://developer.android.com/training/system-ui/immersive.html" target="_blank" rel="external">https://developer.android.com/training/system-ui/immersive.html</a></span></div></p>
+<p><div>    SystemBarTint：<a href="http://https://github.com/jgilfelt/systembartint" target="_blank" rel="external">https://github.com/jgilfelt/SystemBarTint</a></div><br>&nbsp;</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/statusbar/" rel="tag">#statusbar</a>
+          
+            <a href="/tags/状态栏透明/" rel="tag">#状态栏透明</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/28/e8-8e-b7-e5-8f-96app-e5-9c-a8-e7-89-b9-e5-ae-9adpi-e4-b8-8b-e7-9a-84-e5-9b-be-e7-89-87-e6-8c-87-e5-ae-9adpi-e7-9a-84activity-icon/" rel="next" title="获取app在特定dpi下的图片(指定dpi的activity icon)">
+                <i class="fa fa-chevron-left"></i> 获取app在特定dpi下的图片(指定dpi的activity icon)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/02/e5-85-b3-e4-ba-8e-e6-88-91-e5-b8-b8-e7-94-a8-e6-a1-86-e6-9e-b6-e7-9a-84proguard-e6-b7-b7-e6-b7-86/" rel="prev" title="关于我常用框架的ProGuard混淆">
+                关于我常用框架的ProGuard混淆 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Eraise" />
+          <p class="site-author-name" itemprop="name">Eraise</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Eraise</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
