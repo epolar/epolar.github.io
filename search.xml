@@ -8,7 +8,7 @@
       <url>http://eraise.xyz/2016/08/09/recyclerview-e7-9a-84-e4-bd-bf-e7-94-a8/</url>
       <content type="html"><![CDATA[<h3 id="·-简介"><a href="#·-简介" class="headerlink" title="· 简介"></a>· 简介</h3><p>RecyclerView 已经不是一个新的东西了，我相信大部分的 Android 开发者都已经开始使用了。碰上过许多朋友问我：RecyclerView 跟 ListView 相比，有什么好处？我总是只能回答：更灵活，更新！灵活在哪里我说不出来，新也不是使用它的理由 – 况且使用它还更麻烦了。使用 RecyclerView 和 ListView 差不多，只是需要一个而已管理器， LinearLayoutManager GridLayoutManager 什么的。<br>但是这样就算是会用了吗？除了更麻烦以外(没有 onItemClickListener onItemLongClickListener，设置 Header Footer也麻烦些)，它有什么好处？</p>
 <p>还有什么好处，我也不知道，以上都是废话。。。。</p>
-<h3 id="·-既然如此，那我写这个要干嘛？"><a href="#·-既然如此，那我写这个要干嘛？" class="headerlink" title="· 既然如此，那我写这个要干嘛？"></a>· 既然如此，那我写这个要干嘛？</h3><p>想要普及 RecyclerView 几个简单的，却能提升用户体验的东西，看一下我的效果：<br><img src="../image/2016-08-recyclerview.gif" alt=""></p>
+<h3 id="·-既然如此，那我写这个要干嘛？"><a href="#·-既然如此，那我写这个要干嘛？" class="headerlink" title="· 既然如此，那我写这个要干嘛？"></a>· 既然如此，那我写这个要干嘛？</h3><p>想要普及 RecyclerView 几个简单的，却能提升用户体验的东西，看一下我的效果：<br><img src="/image/2016-08-recyclerview.gif" alt=""></p>
 <p>比 ListView 更容易的实现动画、拖拽等。</p>
 <h3 id="·-介绍工具吧！"><a href="#·-介绍工具吧！" class="headerlink" title="· 介绍工具吧！"></a>· 介绍工具吧！</h3><p>所谓工具，就是相关的几个类，有兴趣的可以去看看详细的信息，没兴趣的可以直接看代码了：</p>
 <ul>
@@ -169,7 +169,7 @@ ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback()
 <h3 id="·-这是个简单的教程，没什么内容，所以结束了。。。"><a href="#·-这是个简单的教程，没什么内容，所以结束了。。。" class="headerlink" title="· 这是个简单的教程，没什么内容，所以结束了。。。"></a>· 这是个简单的教程，没什么内容，所以结束了。。。</h3><blockquote>
 <p>我有一个界面，在 RecyclerView 的最底下有一个按钮，点击就会添加一行，如果满5个，这个按钮就没消失，item减少的时候，这个按钮又会出来。这个时候，在执行 <code>mAdapter.notifyItemRemoved()</code>后，我去点击按钮，结果崩溃了，解救的方法是，在 removed 之后， insert 一个。</p>
 </blockquote>
-<p><a href="../raw/RecyclerDemo.zip">源码下载</a></p>
+<p><a href="/raw/RecyclerDemo.zip">源码下载</a></p>
 <p>相关资料：</p>
 <ul>
 <li><a href="http://stackoverflow.com/a/27037230/4737579" target="_blank" rel="external">在 RecyclerView 的 Item 之间添加间距</a></li>
@@ -318,7 +318,7 @@ return 0;
       <title><![CDATA[测 · ListView在滚动中切换Adapter]]></title>
       <url>http://eraise.xyz/2016/06/02/e6-b5-8b-c2-b7-listview-e5-9c-a8-e6-bb-9a-e5-8a-a8-e4-b8-ad-e5-88-87-e6-8d-a2adapter-md/</url>
       <content type="html"><![CDATA[<p>像新浪微博Android端个人主页那样在滚动中切换了数据，界面还在滚动，一开始呢，我以为它自己写了控件，不过后来发现，切换Adapter就能完成了。</p>
-<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>公司项目里有那么几个界面很是蛋疼，具体的表现就是新浪微博Android的个人主页那样：<br>     <img src="../image/2016-06-02-16-24-15-e1464858407614.jpg" alt=""></p>
+<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>公司项目里有那么几个界面很是蛋疼，具体的表现就是新浪微博Android的个人主页那样：<br>     <img src="/image/2016-06-02-16-24-15-e1464858407614.jpg" alt=""></p>
 <pre><code>`新浪微博效果`
 </code></pre><p>1. 有个头部，显示了用户的一些资料<br>2. 有个 tab ，用来切换内容是什么<br>3. 实验发现，内容在滚动的时候(fling)，按 tab 是可以互切的，且切完以后，界面依然还在滚动</p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><ol>
@@ -464,12 +464,12 @@ tab2.setVisibility(View.VISIBLE);
 
 }
 </code></pre></li>
-<li><p>现在，我用一个 <code>CompAdapter</code> 将三个 Adapter 简单的合并成一个了，<code>ListView</code> 当然是使用 <code>CompAdapter</code>了，按钮切换的时候，我就执行 <code>CompAdapter.setType(int)</code> 方法再执行  ·notifyDataSetChange()<code>方法，</code>Adapter` 的逻辑处理也就完成了，然后我们看一下效果：<br><img src="../image\2016-06-e6-b5-8b.gif" alt=""></p>
+<li><p>现在，我用一个 <code>CompAdapter</code> 将三个 Adapter 简单的合并成一个了，<code>ListView</code> 当然是使用 <code>CompAdapter</code>了，按钮切换的时候，我就执行 <code>CompAdapter.setType(int)</code> 方法再执行  ·notifyDataSetChange()<code>方法，</code>Adapter` 的逻辑处理也就完成了，然后我们看一下效果：<br><img src="/image\2016-06-e6-b5-8b.gif" alt=""></p>
 </li>
 </ul>
 <p>不考虑HeadView的ListView</p>
 <p>嘿，任务算是完成了，很简单的方式去实现一下效果。</p>
-<h3 id="Adapter方面的源码"><a href="#Adapter方面的源码" class="headerlink" title="Adapter方面的源码"></a>Adapter方面的源码</h3><p><a href="../raw/testlistview.rar">点我下载源码</a></p>
+<h3 id="Adapter方面的源码"><a href="#Adapter方面的源码" class="headerlink" title="Adapter方面的源码"></a>Adapter方面的源码</h3><p><a href="/raw/testlistview.rar">点我下载源码</a></p>
 ]]></content>
     </entry>
     
@@ -633,7 +633,7 @@ NEXUS_PASSWORD=123456
 </ul>
 <h5 id="style中添加一下PopupWindow要使用的样式"><a href="#style中添加一下PopupWindow要使用的样式" class="headerlink" title="style中添加一下PopupWindow要使用的样式:"></a>style中添加一下PopupWindow要使用的样式:</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"CustomPopupTheme"</span> <span class="attr">parent</span>=<span class="string">"AppTheme"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:popupAnimationStyle"</span>&gt;</span>@style/PopupAnimation<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"PopupAnimation"</span> <span class="attr">parent</span>=<span class="string">"android:Animation"</span> <span class="attr">mce_bogus</span>=<span class="string">"1"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowEnterAnimation"</span>&gt;</span>@anim/popup_enter<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowExitAnimation"</span>&gt;</span>@anim/popup_exit<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
 <h5 id="在Spinner控件里去使用它："><a href="#在Spinner控件里去使用它：" class="headerlink" title="在Spinner控件里去使用它："></a>在Spinner控件里去使用它：</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Spinner</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/spinner"</span></div><div class="line">    <span class="attr">style</span>=<span class="string">"@style/CustomPopupTheme"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:spinnerMode</span>=<span class="string">"dropdown"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
-<h5 id="然后就搞定了，效果："><a href="#然后就搞定了，效果：" class="headerlink" title="然后就搞定了，效果："></a>然后就搞定了，效果：</h5><p><img src="../image/a4c25fdd22454bf525d26ed4c057cf85_Video_2015-12-30_131550.gif" alt=""></p>
+<h5 id="然后就搞定了，效果："><a href="#然后就搞定了，效果：" class="headerlink" title="然后就搞定了，效果："></a>然后就搞定了，效果：</h5><p><img src="/image/a4c25fdd22454bf525d26ed4c057cf85_Video_2015-12-30_131550.gif" alt=""></p>
 ]]></content>
     </entry>
     
@@ -835,7 +835,7 @@ taskkill /f /t /im adb.exe // 强制终止任务， /f是强制 /t 是任务进�
 <p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"> <span style="color: #bed6ff;">mSystemBarTintManager</span>.<span style="color: #ffffff;">setStatusBarTintColor</span>(<span style="color: #79abff;">_ta</span>.<span style="color: #ffffff;">getColor</span>(<span style="color: #7fb347;">0</span>, <span style="color: #bed6ff;">getTitleColor</span>()));</span></div><br><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';"><span style="color: #79abff;"><span style="background-color: #000000;">_ta</span></span><span style="background-color: #000000;">.<span style="color: #ffffff;">recycle</span>();</span></span><span style="background-color: #000000;">  </span></p>
 <p></p>
 <p><div>达到效果：</div></p>
-<p><div><a href=""><img src="../image/84d2ab13-2c75-491f-a2b6-50e5e88e820b.png" alt="84d2ab13-2c75-491f-a2b6-50e5e88e820b"></a></div></p>
+<p><div><a href=""><img src="/image/84d2ab13-2c75-491f-a2b6-50e5e88e820b.png" alt="84d2ab13-2c75-491f-a2b6-50e5e88e820b"></a></div></p>
 <p><div>SystemBarTint加通过类似代码:</div></p>
 <p><div></div></p>
 <p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #c7dd0c;">// 状态栏透明</span></span></div></p>
@@ -861,9 +861,9 @@ taskkill /f /t /im adb.exe // 强制终止任务， /f是强制 /t 是任务进�
 <p></p>
 <p><div>我实现了效果：</div></p>
 <p><div>(4.1系统<span style="font-size: 10.5pt; line-height: 1.5;">)</span></div></p>
-<p><div><a href="6717b0fc-9466-4a94-a984-d2c549ac3b47.png"><img src="../image/6717b0fc-9466-4a94-a984-d2c549ac3b47.png" alt="6717b0fc-9466-4a94-a984-d2c549ac3b47"></a></div></p>
+<p><div><a href="6717b0fc-9466-4a94-a984-d2c549ac3b47.png"><img src="/image/6717b0fc-9466-4a94-a984-d2c549ac3b47.png" alt="6717b0fc-9466-4a94-a984-d2c549ac3b47"></a></div></p>
 <p><div>(4.4系统)</div></p>
-<p><div><a href="42b0849f-e051-47bc-87b8-fd88ccb105e4.jpg"><img src="../image/42b0849f-e051-47bc-87b8-fd88ccb105e4.jpg" alt="42b0849f-e051-47bc-87b8-fd88ccb105e4"></a></div></p>
+<p><div><a href="42b0849f-e051-47bc-87b8-fd88ccb105e4.jpg"><img src="/image/42b0849f-e051-47bc-87b8-fd88ccb105e4.jpg" alt="42b0849f-e051-47bc-87b8-fd88ccb105e4"></a></div></p>
 <p><div>参考资料：</div></p>
 <p><div><span style="font-family: 微软雅黑;">    官方对4.4沉浸式体验的教程：<a href="http://https://developer.android.com/training/system-ui/immersive.html" target="_blank" rel="external">https://developer.android.com/training/system-ui/immersive.html</a></span></div></p>
 <p><div>    SystemBarTint：<a href="http://https://github.com/jgilfelt/systembartint" target="_blank" rel="external">https://github.com/jgilfelt/SystemBarTint</a></div><br>&nbsp;</p>
