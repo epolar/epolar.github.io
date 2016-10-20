@@ -169,7 +169,7 @@ ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback()
 <h3 id="·-这是个简单的教程，没什么内容，所以结束了。。。"><a href="#·-这是个简单的教程，没什么内容，所以结束了。。。" class="headerlink" title="· 这是个简单的教程，没什么内容，所以结束了。。。"></a>· 这是个简单的教程，没什么内容，所以结束了。。。</h3><blockquote>
 <p>我有一个界面，在 RecyclerView 的最底下有一个按钮，点击就会添加一行，如果满5个，这个按钮就没消失，item减少的时候，这个按钮又会出来。这个时候，在执行 <code>mAdapter.notifyItemRemoved()</code>后，我去点击按钮，结果崩溃了，解救的方法是，在 removed 之后， insert 一个。</p>
 </blockquote>
-<p><a href="/raw/RecyclerDemo.zip">源码下载</a></p>
+
 <p>相关资料：</p>
 <ul>
 <li><a href="http://stackoverflow.com/a/27037230/4737579" target="_blank" rel="external">在 RecyclerView 的 Item 之间添加间距</a></li>
