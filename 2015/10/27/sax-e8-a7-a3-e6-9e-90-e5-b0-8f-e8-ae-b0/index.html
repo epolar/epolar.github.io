@@ -85,18 +85,24 @@
 
 
 <meta name="description" content="SAX解析需要先通过SAXParserFactory.newInstance()得到SAXParseFacotry，
-通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader，设置XMLReader的ContentHandler(内容处理者)为DefaultHandler，调用XMLReader的pars">
+通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader
+通过SAXParser得到XMLReader
+设置XMLReader的ContentHandler(内容处理者)为Default">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SAX解析小记">
 <meta property="og:url" content="http://eraise.xyz/2015/10/27/sax-e8-a7-a3-e6-9e-90-e5-b0-8f-e8-ae-b0/index.html">
 <meta property="og:site_name" content="我吃西瓜">
 <meta property="og:description" content="SAX解析需要先通过SAXParserFactory.newInstance()得到SAXParseFacotry，
-通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader，设置XMLReader的ContentHandler(内容处理者)为DefaultHandler，调用XMLReader的pars">
-<meta property="og:updated_time" content="2016-09-23T01:49:15.841Z">
+通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader
+通过SAXParser得到XMLReader
+设置XMLReader的ContentHandler(内容处理者)为Default">
+<meta property="og:updated_time" content="2016-10-20T07:27:01.115Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SAX解析小记">
 <meta name="twitter:description" content="SAX解析需要先通过SAXParserFactory.newInstance()得到SAXParseFacotry，
-通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader，设置XMLReader的ContentHandler(内容处理者)为DefaultHandler，调用XMLReader的pars">
+通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader
+通过SAXParser得到XMLReader
+设置XMLReader的ContentHandler(内容处理者)为Default">
 
 
 
@@ -321,8 +327,52 @@
       
 
       
-        <p>SAX解析需要先通过SAXParserFactory.newInstance()得到SAXParseFacotry，</p>
-<div><br><br>通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或<br><div>通过SAXParser得到XMLReader，</div><br><div>设置XMLReader的ContentHandler(内容处理者)为DefaultHandler，</div><br><div>调用XMLReader的parser()方法开始解析，这些步骤都是死板的，需要记住的是DefaultHandler的继承，对于内部方法的重载：</div><br>&gt; <div><span style="color: #ad0000; font-size: small;"><strong>startDocument()方法调用于文件的开始</strong></span></div><br>&gt;<br>&gt; <div><span style="color: #ad0000; font-size: small;"><strong>endDocument()方法调用于文件的结束</strong></span></div><br>&gt;<br>&gt; <div><span style="color: #ad0000; font-size: small;"><strong>startElement(String uri, String localName, String qName, Attributes)方法调用于元素的开始，元素开始就是一个元素如&lt;book&gt;出现</strong></span></div><br>&gt;<br>&gt; <div><span style="color: #ad0000; font-size: small;"><strong>endElement(String uri, String localName, String qName)方法调用于元素的结束，元素结束就是一个元素如&lt;/book&gt;出现</strong></span></div><br>&gt;<br>&gt; <div><span style="color: #ad0000; font-size: small;"><strong>characters(char[] ch, int start, int length)调用于元素开始之后，如果一个元素如&lt;book&gt;think in java &lt;/book&gt;出现，在startElement方法被调用以后，将会调用characters，这个时候可以得到 “think in java” 这个字符串。</strong></span></div><br>&gt;<br>&gt; <div><span style="color: #ad0000; font-size: small;"><strong>SAX的使用需要注意的是：SAX的元素因为在characters中调用，所以并不知道这个文本属于哪个元素，需要有一个记录当前元素的东西。</strong></span></div><br>&gt;<br>&gt; <div><span style="color: #ad0000; font-size: small;"><strong>XML有开始元素和结束元素，在开始元素跟结束元素之间，还会存在一些元素，要保持xml文件当中的结构用Stack是一个不错的选择。</strong></span></div><br>&gt;<br>&gt; <div><span style="color: #ad0000;"><strong> </strong></span></div><br>&gt;<br>&gt; <div><span style="color: #ad0000; font-size: small;"><strong>DOM生成XML通过</strong></span></div><br>&gt;<br>&gt; <div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;">transformer.setOutputProperty(OutputKeys.</span> <span style="color: #0000c0; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><em>INDENT</em></span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;">,</span> <span style="color: #2a00ff; font-family: 'YaHei Consolas Hybrid'; font-size: small;">“yes”</span> <span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;">);</span></div><br>&gt;<br>&gt; <div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;">transformer.setOutputProperty(</span> <span style="color: #2a00ff; font-family: 'YaHei Consolas Hybrid'; font-size: small;">“{<a href="http://xml.apache.org/xalan}indent-amount" target="_blank" rel="external">http://xml.apache.org/xalan}indent-amount</a>“</span> <span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;">,</span> <span style="color: #2a00ff; font-family: 'YaHei Consolas Hybrid'; font-size: small;">“2”</span> <span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;">);</span></div><br>&gt;<br>&gt; <div align="left"><span style="color: #ad0000; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><strong>设置缩进</strong></span></div><br></div>
+        <ol>
+<li>SAX解析需要先通过SAXParserFactory.newInstance()得到SAXParseFacotry，</li>
+<li>通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader</li>
+<li>通过SAXParser得到XMLReader</li>
+<li>设置XMLReader的ContentHandler(内容处理者)为DefaultHandler</li>
+<li>调用XMLReader的parser()方法开始解析</li>
+</ol>
+<p><strong>↑↑↑这些步骤都是死板的</strong><br><strong>需要记住的是DefaultHandler的继承，对于内部方法的重载：</strong></p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>startDocument()</code></td>
+<td>调用于文件的开始</td>
+</tr>
+<tr>
+<td><code>endDocument()</code></td>
+<td>调用于文件的结束</td>
+</tr>
+<tr>
+<td><code>startElement(String uri, String localName, String qName, Attributes)</code></td>
+<td>调用于元素的开始，元素开始就是一个元素如<book>出现</book></td>
+</tr>
+<tr>
+<td><code>endElement(String uri, String localName, String qName)</code></td>
+<td>用于元素的结束，元素结束就是一个元素如出现</td>
+</tr>
+<tr>
+<td><code>characters(char[] ch, int start, int length)</code></td>
+<td>调用于元素开始之后，如果一个元素如<book>think in java </book>出现，在startElement方法被调用以后，将会调用characters，这个时候可以得到 “think in java” 这个字符串。</td>
+</tr>
+</tbody>
+</table>
+<p><span style="color:#F66">SAX的使用需要注意的是：SAX的元素因为在characters中调用，所以并不知道这个文本属于哪个元素，需要有一个记录当前元素的东西。</span></p>
+<blockquote>
+<p>XML有开始元素和结束元素，在开始元素跟结束元素之间，还会存在一些元素，要保持xml文件当中的结构用Stack是一个不错的选择。</p>
+</blockquote>
+<hr>
+<p>DOM生成XML通过<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">transformer.setOutputProperty(OutputKeys. INDENT, “yes” );</div><div class="line">transformer.setOutputProperty( “&#123;http:<span class="comment">//xml.apache.org/xalan&#125;indent-amount” , “2” );</span></div></pre></td></tr></table></figure></p>
+<p>设置缩进</p>
+
       
     </div>
 

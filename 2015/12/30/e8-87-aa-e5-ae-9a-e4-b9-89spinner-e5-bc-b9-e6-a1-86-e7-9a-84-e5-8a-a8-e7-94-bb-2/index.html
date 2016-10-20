@@ -90,12 +90,12 @@
 <meta property="og:url" content="http://eraise.xyz/2015/12/30/e8-87-aa-e5-ae-9a-e4-b9-89spinner-e5-bc-b9-e6-a1-86-e7-9a-84-e5-8a-a8-e7-94-bb-2/index.html">
 <meta property="og:site_name" content="我吃西瓜">
 <meta property="og:description" content="有人问了这样的问题，就试验看看了。发现Spinner并没有提供这样的类似于 Activity.overridePendingTransition 这样自定义动画的方法，去瞅了眼源码，发现源码里，Spinner里的PopupWindow/Dialog都是内部定义的类，群里的朋友问的是PopupWindow展示的方式的，所以试验了PopupWindow的方案。既然没有找到源码，那就只好寻找其他方案了，">
-<meta property="og:image" content="http://www.eraise.xyz/wp-content/uploads/2015/12/a4c25fdd22454bf525d26ed4c057cf85_Video_2015-12-30_131550.gif">
-<meta property="og:updated_time" content="2016-09-23T01:49:15.841Z">
+<meta property="og:image" content="http://eraise.xyz/../image/a4c25fdd22454bf525d26ed4c057cf85_Video_2015-12-30_131550.gif">
+<meta property="og:updated_time" content="2016-10-20T06:41:36.341Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义Spinner弹框的动画">
 <meta name="twitter:description" content="有人问了这样的问题，就试验看看了。发现Spinner并没有提供这样的类似于 Activity.overridePendingTransition 这样自定义动画的方法，去瞅了眼源码，发现源码里，Spinner里的PopupWindow/Dialog都是内部定义的类，群里的朋友问的是PopupWindow展示的方式的，所以试验了PopupWindow的方案。既然没有找到源码，那就只好寻找其他方案了，">
-<meta name="twitter:image" content="http://www.eraise.xyz/wp-content/uploads/2015/12/a4c25fdd22454bf525d26ed4c057cf85_Video_2015-12-30_131550.gif">
+<meta name="twitter:image" content="http://eraise.xyz/../image/a4c25fdd22454bf525d26ed4c057cf85_Video_2015-12-30_131550.gif">
 
 
 
@@ -320,117 +320,19 @@
       
 
       
-        <p>有人问了这样的问题，就试验看看了。<br>发现Spinner并没有提供这样的类似于 Activity.overridePendingTransition 这样自定义动画的方法，去瞅了眼源码，发现源码里，Spinner里的PopupWindow/Dialog都是内部定义的类，群里的朋友问的是PopupWindow展示的方式的，所以试验了PopupWindow的方案。<br>既然没有找到源码，那就只好寻找其他方案了，getPopupContext的API等级在23，不能通过这个来改变动画，于是考虑使用style设置默认的来做，但是popupwindow是在Spinner内部构建的，最后解决方案是在style中去写。<br>先为PopupWindow准备了打开和关闭的两个动画xml：</p>
-<blockquote>
-<p>popup_enter.xml</p>
-<p>&nbsp;</p>
-<pre style="background-color: #2b2b2b; color: #a9b7c6; font-family: '宋体'; font-size: 9.0pt;"><span style="color: #e8bf6a;">&lt;?</span><span style="color: #bababa;">xml version=</span><span style="color: #6a8759;">"1.0" </span><span style="color: #bababa;">encoding=</span><span style="color: #6a8759;">"utf-8"</span><span style="color: #e8bf6a;">?&gt;
+        <p>有人问了这样的问题，就试验看看了。<br>发现Spinner并没有提供这样的类似于 Activity.overridePendingTransition 这样自定义动画的方法，去瞅了眼源码，发现源码里，Spinner里的PopupWindow/Dialog都是内部定义的类，群里的朋友问的是PopupWindow展示的方式的，所以试验了PopupWindow的方案。<br>既然没有找到源码，那就只好寻找其他方案了，getPopupContext的API等级在23，不能通过这个来改变动画，于是考虑使用style设置默认的来做，但是popupwindow是在Spinner内部构建的，最后解决方案是在style中去写。</p>
+<h5 id="先为PopupWindow准备了打开和关闭的两个动画xml："><a href="#先为PopupWindow准备了打开和关闭的两个动画xml：" class="headerlink" title="先为PopupWindow准备了打开和关闭的两个动画xml："></a>先为PopupWindow准备了打开和关闭的两个动画xml：</h5><ul>
+<li><p>popup_enter.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scale</span></span></div><div class="line">        <span class="attr">android:fromXScale</span>=<span class="string">"1.0"</span></div><div class="line">        <span class="attr">android:toXScale</span>=<span class="string">"1.0"</span></div><div class="line">        <span class="attr">android:fromYScale</span>=<span class="string">"0.6"</span></div><div class="line">        <span class="attr">android:toYScale</span>=<span class="string">"1.0"</span></div><div class="line">        <span class="attr">android:pivotX</span>=<span class="string">"50%"</span></div><div class="line">        <span class="attr">android:pivotY</span>=<span class="string">"0%"</span></div><div class="line">        <span class="attr">android:duration</span>=<span class="string">"1000"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">alpha</span> <span class="attr">android:interpolator</span>=<span class="string">"@android:anim/decelerate_interpolator"</span></span></div><div class="line">        <span class="attr">android:fromAlpha</span>=<span class="string">"0.0"</span></div><div class="line">        <span class="attr">android:toAlpha</span>=<span class="string">"1.0"</span></div><div class="line">        <span class="attr">android:duration</span>=<span class="string">"1000"</span></div><div class="line">        /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>popup_exit.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scale</span></span></div><div class="line">        <span class="attr">android:fromXScale</span>=<span class="string">"1.0"</span></div><div class="line">        <span class="attr">android:toXScale</span>=<span class="string">"1.0"</span></div><div class="line">        <span class="attr">android:fromYScale</span>=<span class="string">"1.0"</span></div><div class="line">        <span class="attr">android:toYScale</span>=<span class="string">"0.5"</span></div><div class="line">        <span class="attr">android:pivotX</span>=<span class="string">"50%"</span></div><div class="line">        <span class="attr">android:pivotY</span>=<span class="string">"0%"</span></div><div class="line">        <span class="attr">android:duration</span>=<span class="string">"500"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">alpha</span></span></div><div class="line">        <span class="attr">android:interpolator</span>=<span class="string">"@android:anim/accelerate_interpolator"</span></div><div class="line">        <span class="attr">android:fromAlpha</span>=<span class="string">"1.0"</span></div><div class="line">        <span class="attr">android:toAlpha</span>=<span class="string">"0.0"</span></div><div class="line">        <span class="attr">android:duration</span>=<span class="string">"500"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="style中添加一下PopupWindow要使用的样式"><a href="#style中添加一下PopupWindow要使用的样式" class="headerlink" title="style中添加一下PopupWindow要使用的样式:"></a>style中添加一下PopupWindow要使用的样式:</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"CustomPopupTheme"</span> <span class="attr">parent</span>=<span class="string">"AppTheme"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:popupAnimationStyle"</span>&gt;</span>@style/PopupAnimation<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"PopupAnimation"</span> <span class="attr">parent</span>=<span class="string">"android:Animation"</span> <span class="attr">mce_bogus</span>=<span class="string">"1"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowEnterAnimation"</span>&gt;</span>@anim/popup_enter<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowExitAnimation"</span>&gt;</span>@anim/popup_exit<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
+<h5 id="在Spinner控件里去使用它："><a href="#在Spinner控件里去使用它：" class="headerlink" title="在Spinner控件里去使用它："></a>在Spinner控件里去使用它：</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Spinner</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/spinner"</span></div><div class="line">    <span class="attr">style</span>=<span class="string">"@style/CustomPopupTheme"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:spinnerMode</span>=<span class="string">"dropdown"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
+<h5 id="然后就搞定了，效果："><a href="#然后就搞定了，效果：" class="headerlink" title="然后就搞定了，效果："></a>然后就搞定了，效果：</h5><p><img src="../image/a4c25fdd22454bf525d26ed4c057cf85_Video_2015-12-30_131550.gif" alt=""></p>
 
-</span><span style="color: #e8bf6a;">&lt;set </span><span style="color: #bababa;">xmlns:</span><span style="color: #9876aa;">android</span><span style="color: #bababa;">=</span><span style="color: #6a8759;">"http://schemas.android.com/apk/res/android"</span><span style="color: #e8bf6a;">&gt;
-
-</span><span style="color: #e8bf6a;">    &lt;scale
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:fromXScale=</span><span style="color: #6a8759;">"1.0"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:toXScale=</span><span style="color: #6a8759;">"1.0"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:fromYScale=</span><span style="color: #6a8759;">"0.6"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:toYScale=</span><span style="color: #6a8759;">"1.0"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:pivotX=</span><span style="color: #6a8759;">"50%"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:pivotY=</span><span style="color: #6a8759;">"0%"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:duration=</span><span style="color: #6a8759;">"1000" </span><span style="color: #e8bf6a;">/&gt;
-
-</span><span style="color: #e8bf6a;">    &lt;alpha </span><span style="color: #9876aa;">android</span><span style="color: #bababa;">:interpolator=</span><span style="color: #6a8759;">"@android:anim/decelerate_interpolator"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:fromAlpha=</span><span style="color: #6a8759;">"0.0"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:toAlpha=</span><span style="color: #6a8759;">"1.0"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:duration=</span><span style="color: #6a8759;">"1000"
-
-</span>        <span style="color: #e8bf6a;">/&gt;
-
-</span><span style="color: #e8bf6a;">&lt;/set&gt;</span></pre>
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>popup_exit.xml</p>
-<pre style="background-color: #2b2b2b; color: #a9b7c6; font-family: '宋体'; font-size: 9.0pt;"><span style="color: #e8bf6a;">&lt;?</span><span style="color: #bababa;">xml version=</span><span style="color: #6a8759;">"1.0" </span><span style="color: #bababa;">encoding=</span><span style="color: #6a8759;">"utf-8"</span><span style="color: #e8bf6a;">?&gt;
-
-</span><span style="color: #e8bf6a;">&lt;set </span><span style="color: #bababa;">xmlns:</span><span style="color: #9876aa;">android</span><span style="color: #bababa;">=</span><span style="color: #6a8759;">"http://schemas.android.com/apk/res/android"</span><span style="color: #e8bf6a;">&gt;
-
-</span><span style="color: #e8bf6a;">    &lt;scale
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:fromXScale=</span><span style="color: #6a8759;">"1.0"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:toXScale=</span><span style="color: #6a8759;">"1.0"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:fromYScale=</span><span style="color: #6a8759;">"1.0"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:toYScale=</span><span style="color: #6a8759;">"0.5"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:pivotX=</span><span style="color: #6a8759;">"50%"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:pivotY=</span><span style="color: #6a8759;">"0%"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:duration=</span><span style="color: #6a8759;">"500" </span><span style="color: #e8bf6a;">/&gt;
-
-</span><span style="color: #e8bf6a;">    &lt;alpha
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:interpolator=</span><span style="color: #6a8759;">"@android:anim/accelerate_interpolator"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:fromAlpha=</span><span style="color: #6a8759;">"1.0"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:toAlpha=</span><span style="color: #6a8759;">"0.0"
-
-</span>        <span style="color: #9876aa;">android</span><span style="color: #bababa;">:duration=</span><span style="color: #6a8759;">"500" </span><span style="color: #e8bf6a;">/&gt;
-
-</span><span style="color: #e8bf6a;">&lt;/set&gt;</span></pre>
-
-</blockquote>
-<p>style中添加一下PopupWindow要使用的样式:</p>
-<blockquote>
-<pre style="background-color: #2b2b2b; color: #a9b7c6; font-family: '宋体'; font-size: 9.0pt;"><span style="color: #e8bf6a;">&lt;style </span><span style="color: #bababa;">name=</span><span style="color: #6a8759;">"CustomPopupTheme" </span><span style="color: #bababa;">parent=</span><span style="color: #6a8759;">"AppTheme"</span><span style="color: #e8bf6a;">&gt;
-
-</span><span style="color: #e8bf6a;">    &lt;item </span><span style="color: #bababa;">name=</span><span style="color: #6a8759;">"android:popupAnimationStyle"</span><span style="color: #e8bf6a;">&gt;</span>@style/PopupAnimation<span style="color: #e8bf6a;">&lt;/item&gt;
-
-</span><span style="color: #e8bf6a;">&lt;/style&gt;
-
-</span><span style="color: #e8bf6a;">
-
-</span><span style="color: #e8bf6a;">&lt;style </span><span style="color: #bababa;">name=</span><span style="color: #6a8759;">"PopupAnimation" </span><span style="color: #bababa;">parent=</span><span style="color: #6a8759;">"android:Animation" </span><span style="color: #bababa;">mce_bogus=</span><span style="color: #6a8759;">"1"</span><span style="color: #e8bf6a;">&gt;
-
-</span><span style="color: #e8bf6a;">    &lt;item </span><span style="color: #bababa;">name=</span><span style="color: #6a8759;">"android:windowEnterAnimation"</span><span style="color: #e8bf6a;">&gt;</span>@anim/popup_enter<span style="color: #e8bf6a;">&lt;/item&gt;
-
-</span><span style="color: #e8bf6a;">    &lt;item </span><span style="color: #bababa;">name=</span><span style="color: #6a8759;">"android:windowExitAnimation"</span><span style="color: #e8bf6a;">&gt;</span>@anim/popup_exit<span style="color: #e8bf6a;">&lt;/item&gt;
-
-</span><span style="color: #e8bf6a;">&lt;/style&gt;</span></pre>
-
-<p>&nbsp;</p>
-</blockquote>
-<p>在Spinner控件里去使用它：</p>
-<blockquote>
-<pre style="background-color: #2b2b2b; color: #a9b7c6; font-family: '宋体'; font-size: 9.0pt;"><span style="color: #e8bf6a;">&lt;Spinner
-
-</span>    <span style="color: #9876aa;">android</span><span style="color: #bababa;">:id=</span><span style="color: #6a8759;">"@+id/spinner"
-
-</span>    <span style="color: #bababa;">style=</span><span style="color: #6a8759;">"@style/CustomPopupTheme"
-
-</span>    <span style="color: #9876aa;">android</span><span style="color: #bababa;">:layout_width=</span><span style="color: #6a8759;">"match_parent"
-
-</span>    <span style="color: #9876aa;">android</span><span style="color: #bababa;">:layout_height=</span><span style="color: #6a8759;">"wrap_content"
-
-</span>    <span style="color: #9876aa;">android</span><span style="color: #bababa;">:spinnerMode=</span><span style="color: #6a8759;">"dropdown"
-
-</span>    <span style="color: #e8bf6a;">/&gt;</span></pre>
-
-</blockquote>
-<p>然后就搞定了，效果：<br><img src="http://www.eraise.xyz/wp-content/uploads/2015/12/a4c25fdd22454bf525d26ed4c057cf85_Video_2015-12-30_131550.gif" alt=""></p>
-<div></div>
       
     </div>
 
@@ -587,7 +489,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#先为PopupWindow准备了打开和关闭的两个动画xml："><span class="nav-number">1.</span> <span class="nav-text">先为PopupWindow准备了打开和关闭的两个动画xml：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#style中添加一下PopupWindow要使用的样式"><span class="nav-number">2.</span> <span class="nav-text">style中添加一下PopupWindow要使用的样式:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在Spinner控件里去使用它："><span class="nav-number">3.</span> <span class="nav-text">在Spinner控件里去使用它：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#然后就搞定了，效果："><span class="nav-number">4.</span> <span class="nav-text">然后就搞定了，效果：</span></a></li></ol></div>
             
           </div>
         </section>

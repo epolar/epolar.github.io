@@ -85,27 +85,18 @@
 
 
 <meta name="description" content="Notification 是下拉列表与状态栏信息显示控件，最常见的案例是短信 —– 收到短信的时候，状态栏会显示通知提示，LED灯亮起，提示音响起，手机震动，下拉栏里新增该信息的通知，点击该通知将跳转到信息Activity中
-
- 
-// 得到 NotificationManager 对象，这个对象的获取通过 Context 的 getSystemSerivce 可以得到
-NotificationM">
+123456789101112// 得到 NotificationManager 对象，这个对象的获取通过 Context 的 getSystemSerivce 可以得到No">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NotificationManager和Notification">
 <meta property="og:url" content="http://eraise.xyz/2015/10/27/notificationmanager-e5-92-8cnotification/index.html">
 <meta property="og:site_name" content="我吃西瓜">
 <meta property="og:description" content="Notification 是下拉列表与状态栏信息显示控件，最常见的案例是短信 —– 收到短信的时候，状态栏会显示通知提示，LED灯亮起，提示音响起，手机震动，下拉栏里新增该信息的通知，点击该通知将跳转到信息Activity中
-
- 
-// 得到 NotificationManager 对象，这个对象的获取通过 Context 的 getSystemSerivce 可以得到
-NotificationM">
-<meta property="og:updated_time" content="2016-09-23T01:49:15.841Z">
+123456789101112// 得到 NotificationManager 对象，这个对象的获取通过 Context 的 getSystemSerivce 可以得到No">
+<meta property="og:updated_time" content="2016-10-20T07:18:03.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NotificationManager和Notification">
 <meta name="twitter:description" content="Notification 是下拉列表与状态栏信息显示控件，最常见的案例是短信 —– 收到短信的时候，状态栏会显示通知提示，LED灯亮起，提示音响起，手机震动，下拉栏里新增该信息的通知，点击该通知将跳转到信息Activity中
-
- 
-// 得到 NotificationManager 对象，这个对象的获取通过 Context 的 getSystemSerivce 可以得到
-NotificationM">
+123456789101112// 得到 NotificationManager 对象，这个对象的获取通过 Context 的 getSystemSerivce 可以得到No">
 
 
 
@@ -331,26 +322,14 @@ NotificationM">
 
       
         <p>Notification 是下拉列表与状态栏信息显示控件，最常见的案例是短信 —– 收到短信的时候，状态栏会显示通知提示，LED灯亮起，提示音响起，手机震动，下拉栏里新增该信息的通知，点击该通知将跳转到信息Activity中</p>
-<p><div style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"></div></p>
-<p><div align="left"><span style="color: #771c1e; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"> </span></span></div></p>
-<p><div align="left"><span style="color: #771c1e; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">// 得到 NotificationManager 对象，这个对象的获取通过 Context 的 getSystemSerivce 可以得到</span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">NotificationManager nm = (NotificationManager)</span></span> <span style="color: #7f0055; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"><strong>this</strong></span></span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">.getSystemService(Context.</span></span><span style="color: #0000c0; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">_NOTIFICATION<em>SERVICE</em></span></span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">);</span></span></div></p>
-<p><div align="left"> <span style="color: #771c1e; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">// 创建一个 Notification 对象， 这里传入的三个值是显示在状态栏上的，其中第二项将会在刚显示的时候出现</span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">Notification notification =</span></span> <span style="color: #7f0055; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"><strong>new</strong></span></span> <span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">Notification(android.R.drawable.</span></span><span style="color: #0000c0; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">_stat_notify<em>chat</em></span></span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">,</span></span> <span style="color: #2a00ff; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">“Hello World”</span></span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">, System.</span><span style="font-size: 10pt;"><em>currentTimeMillis</em></span><span style="font-size: 10pt;">());</span></span></div></p>
-<p><div align="left"> <span style="color: #771c1e; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">// 点击了该 Notification(通知) 打开的窗口</span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">Intent notificationIntent =</span></span> <span style="color: #7f0055; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"><strong>new</strong></span></span> <span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">Intent(</span></span><span style="color: #7f0055; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"><strong>this</strong></span></span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">, ListActivity.</span></span><span style="color: #7f0055; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"><strong>class</strong></span></span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">);</span></span></div></p>
-<p><div align="left"> <span style="color: #771c1e; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">// Notification 的Intent</span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">PendingIntent contentIntent = PendingIntent.</span> <span style="font-size: 10pt;"><em>getActivity</em></span><span style="font-size: 10pt;">(</span></span><span style="color: #7f0055; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"><strong>this</strong></span></span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">, 0, notificationIntent, 0);</span></span></div></p>
-<p><div align="left"><span style="color: #771c1e; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">// 调用系统 Notification 的话，在下拉列表里显示的信息(图标已经在上面设置过)</span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">notification.setLatestEventInfo(</span></span> <span style="color: #7f0055; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"><strong>this</strong></span></span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">,</span></span> <span style="color: #2a00ff; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">“我是Title”</span></span> <span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">,</span></span> <span style="color: #2a00ff; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">“这是一条通知”</span></span><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">, contentIntent);</span></span></div></p>
-<p><div align="left"> <span style="color: #771c1e; font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">// 显示 Notification</span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">nm.notify(0, notification);</span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"> </span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">PendingIntent 的 requestCode 如果设置成同一个值，那么就会根据 flag 进行相关操作，两个 PendingIntent被认为是同一个</span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"> </span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">自定义 Notification 样式的核心是设置contentView为一个RemoteView</span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;"> </span></span></div></p>
-<p><div align="left"><span style="font-family: 'YaHei Consolas Hybrid'; font-size: small;"><span style="font-size: 10pt;">相关资料：</span></span><a href="http://blog.csdn.net/ddna/article/details/5122083" target="_blank" rel="external">http://blog.csdn.net/ddna/article/details/5122083</a></div></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 得到 NotificationManager 对象，这个对象的获取通过 Context 的 getSystemSerivce 可以得到</span></div><div class="line">NotificationManager nm = (NotificationManager) <span class="keyword">this</span>.getSystemService(Context.NOTIFICATION_SERVICE);</div><div class="line"> <span class="comment">// 创建一个 Notification 对象， 这里传入的三个值是显示在状态栏上的，其中第二项将会在刚显示的时候出现</span></div><div class="line">Notification notification = <span class="keyword">new</span> Notification(android.R.drawable.stat_notify_chat, “Hello World”, System.currentTimeMillis());</div><div class="line"> <span class="comment">// 点击了该 Notification(通知) 打开的窗口</span></div><div class="line">Intent notificationIntent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, ListActivity.class);</div><div class="line"> <span class="comment">// Notification 的Intent</span></div><div class="line">PendingIntent contentIntent = PendingIntent. getActivity(<span class="keyword">this</span>, <span class="number">0</span>, notificationIntent, <span class="number">0</span>);</div><div class="line"><span class="comment">// 调用系统 Notification 的话，在下拉列表里显示的信息(图标已经在上面设置过)</span></div><div class="line">notification.setLatestEventInfo( <span class="keyword">this</span>, “我是Title” , “这是一条通知”, contentIntent);</div><div class="line"> <span class="comment">// 显示 Notification</span></div><div class="line">nm.notify(<span class="number">0</span>, notification);</div></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>PendingIntent 的 requestCode 如果设置成同一个值，那么就会根据 flag 进行相关操作，两个 PendingIntent被认为是同一个</strong></p>
+</li>
+<li><p><strong>自定义 Notification 样式的核心是设置contentView为一个RemoteView</strong></p>
+</li>
+</ul>
+<h4 id="相关资料："><a href="#相关资料：" class="headerlink" title="相关资料："></a>相关资料：</h4><p><a href="http://blog.csdn.net/ddna/article/details/5122083" target="_blank" rel="external">http://blog.csdn.net/ddna/article/details/5122083</a></p>
 <p><div align="left">               <a href="http://blog.csdn.net/furongkang/article/details/6900338" target="_blank" rel="external">http://blog.csdn.net/furongkang/article/details/6900338</a></div><br><br>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -512,7 +491,7 @@ NotificationM">
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#相关资料："><span class="nav-number">1.</span> <span class="nav-text">相关资料：</span></a></li></ol></div>
             
           </div>
         </section>
