@@ -310,6 +310,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/12/03/junit-e6-b5-8b-e8-af-95android/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/03/junit-e6-b5-8b-e8-af-95android/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -331,80 +338,16 @@
       
         
           
-            <p><del>Junit(单元测试)，好吧，我看啊看我依然不明白它有什么作用。只是对于单一的方法或许可以一测吧。</del></p>
-<p><strong>每个JUnit测试都可以包含：测试前环境配置  –&gt; 测试用例 –&gt; 测试后资源重置。</strong></p>
-<p>在看Android之前的，就先看看Java的吧，Java的比较简单，使用的是JUnit 4做的测试，在使用Eclipse的时候可以自动添加JUnit 4环境。</p>
-<p>Java的JUnit测试主要就是使用注解 @Test 注解一个方法表明该方法是一个测试用例，用 @After 注解来对 @Test 方法运行完进行后续处理， @Befor 注解对 @Test 方法运行前进行预先的配置处理，不需要西继承什么类了。Java在Eclipse中在运行的时候选择JUnit就可以进行JUnit测试了。在视图里可以找到”JUnit”来查看结果。</p>
-<ol>
-<li><p>先创建一个被测试的类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JunitTest</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> arg1, <span class="keyword">int</span> arg2)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> arg1 + arg2;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> arg1, <span class="keyword">int</span> arg2)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> arg1 – arg2;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>编写测试代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTestCase</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> arg1 = <span class="number">10</span>;</div><div class="line">    <span class="keyword">int</span> arg2 = <span class="number">3</span>;</div><div class="line">    <span class="keyword">int</span> r1 = <span class="number">13</span>;</div><div class="line">    <span class="keyword">int</span> r2 = <span class="number">7</span>;</div><div class="line">    JunitTest jt = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Before</span></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 每个测试用例被调用前调用</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        jt = <span class="keyword">new</span> JunitTest();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 测试用例</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</div><div class="line">        assertTrue(“That is”, jt.add(arg1, arg2) == r1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 测试用例</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSub</span><span class="params">()</span> </span>&#123;</div><div class="line">        assertTrue(“sub is”, jt.sub(arg1, arg2) == r2);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@After</span></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 每个测试用例被调用后调用</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">end</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(“Test finish”);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<hr>
-<p>Android在SDK1.5后提供了JUnit测试，Android的 JUnit 测试需要继承 TestCase 类，并且需要在ManiFest.xml中进行配置，可以写一个类，内部包含一个 <code>public static Test suite(){}</code> 方法来管理测试用例类。Android的JUnit可以是没有界面的(JUnit隐藏掉界面)，不过像下面这样的例子，跟Java基本上就是一致的，这也是最简单的用例。Android与JUnit的结合核心或许是在 <code>BaseTestRunner</code> 类和 <code>AndroidTestRunner</code> 类(junit.runner包)。默认的安卓会有一个<code>BaseTestRunner</code>来帮助我们运行代码，我们也可以通过自己去实例化一个<code>AndroidTestRunner</code>和实现自己的<code>TestListener</code>来做测试。</p>
-<p><strong>在Android里，可以用 Dev Tools(AVD中的APP) –&gt; Instrumentation –&gt; instrumentation结点中的 label 来测试</strong></p>
-<blockquote>
-<p>Android的JUnit集成在内部，所以可以在API文档中查到相关的包、类等。Android中的JUnit包括如下的包：</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>SDK</th>
-<th>功能说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>junit.framework</code></td>
-<td>JUnit测试框架</td>
-</tr>
-<tr>
-<td><code>junit.runner</code></td>
-<td>实用工具类支持JUnit测试框架</td>
-</tr>
-<tr>
-<td><code>android.test</code></td>
-<td>Android 对JUnit测试框架的扩展包</td>
-</tr>
-<tr>
-<td><code>android.test.mock</code></td>
-<td>Android的一些辅助类</td>
-</tr>
-<tr>
-<td><code>android.test.suitebuilder</code></td>
-<td>实用工具类，支持类的测试运行</td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li><p>Manifest.xml要在 application 后面添加 instrumentation 结点，在 application 里添加 user-library， 配置是通用的。</p>
-<ul>
-<li><p>instrumentation 结点内容是：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">instrumentation</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">“android.test.InstrumentationTestRunner”</span></div><div class="line">    <span class="attr">android:targetPackage</span>=<span class="string">“com.eraise.androidjunittest”</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>user-library 结点的内容是：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-library</span> <span class="attr">android:name</span>=<span class="string">“android.test.runner”</span> /&gt;</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>Manifest 修改完后长这样：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=“1.0” encoding=“utf-8”?&gt;</div><div class="line"> &lt;manifest xmlns:android=“http://schemas.android.com/apk/res/android”</div><div class="line"> package=“com.eraise.androidjunittest”</div><div class="line"> android:versionCode=“1”</div><div class="line"> android:versionName=“1.0” &gt;</div><div class="line"> &lt;uses-sdk</div><div class="line">     android:minSdkVersion=“8”</div><div class="line">     android:targetSdkVersion=“18” /&gt;</div><div class="line"> &lt;application</div><div class="line">     android:allowBackup=“true”</div><div class="line">     android:icon=“@drawable/ic_launcher”</div><div class="line">     android:label=“@string/app_name”</div><div class="line">     android:theme=“@style/AppTheme” &gt;</div><div class="line">     &lt;activity</div><div class="line">         android:name=“com.eraise.androidjunittest.JunitTestActivity”</div><div class="line">         android:label=“@string/app_name” &gt;</div><div class="line">         &lt;intent-filter&gt;</div><div class="line">             &lt;action android:name=“android.intent.action.MAIN” /&gt;</div><div class="line">             &lt;category android:name=“android.intent.category.LAUNCHER” /&gt;</div><div class="line">         &lt;/intent-filter&gt;</div><div class="line">     &lt;/activity&gt;</div><div class="line">     &lt;uses-library android:name=“android.test.runner” /&gt;</div><div class="line"> &lt;/application&gt;</div><div class="line"></div><div class="line"> &lt;instrumentation</div><div class="line">     android:name=“android.test.InstrumentationTestRunner”</div><div class="line">     android:targetPackage=“com.eraise.androidjunittest” &lt;!– 指定要测试的包 –&gt;</div><div class="line">     android:label=“com.eraise.AndroidJUnitTest”</div><div class="line">     /&gt;</div><div class="line"></div><div class="line">&lt;/manifest&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>测试的对象跟Java一样，先写一个被测试的类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SampleCalcutor</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> arg1, <span class="keyword">int</span> arg2)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> arg1 + arg2;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> arg1, <span class="keyword">int</span> arg2)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> arg1 – arg2;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>测试类继承于 TestCase，其中的 setUp() 方法在测试样例被调用前调用，可用于环境配置， tearDown() 方法在测试样例调用结束后调用，可用于资源回收， 测试样例只需要是以 test 开头就可以被检查出来(相应的也就是说，test开头的方法都将被当成测试用例)：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyJUnitTest</span> <span class="keyword">extends</span> <span class="title">TestCase</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> arg1 = <span class="number">10</span>;</div><div class="line">    <span class="keyword">int</span> arg2 = <span class="number">3</span>;</div><div class="line">    <span class="keyword">int</span> r1 = <span class="number">13</span>;</div><div class="line">    <span class="keyword">int</span> r2 = <span class="number">7</span>;</div><div class="line">    SampleCalcutor sc = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 每个测试样例调用前调用，可以用于环境配置</div><div class="line">     */</div><div class="line">     <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">        <span class="keyword">super</span>.setUp();</div><div class="line">        sc = <span class="keyword">new</span> SampleCalcutor();</div><div class="line">        System.out.println(“测试前”);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 每个测试样例结束后调用，可以用于资源的回收</div><div class="line">     */</div><div class="line">     <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">tearDown</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">        <span class="keyword">super</span>.tearDown();</div><div class="line">        System.out.println(“测试完”);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 测试用例1</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> result = sc.add(arg1, arg2);</div><div class="line">        assertTrue(“add result is “, result == r1);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 测试用例2</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSub</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> result = sc.sub(arg1, arg2);</div><div class="line">        assertTrue(“subtract result is “, result == r2);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>以上已经可以运行了，通过右键项目 — Run As –&gt; Android JUnit Test， 不过这样如果有多个 TestCase ，就都会被运行出来，所以我们可以用一个拥有 public static Test suite(){} 的类来运行，使用 TestSuite 管理 TestSuite.addTestSuite() 添加需要测试的用例类：</p>
-</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestAll</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 管理测试用例，直接在TestAll右键以Android JUnit方式运行</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Test <span class="title">suite</span><span class="params">()</span> </span>&#123;</div><div class="line">        TestSuite suite = <span class="keyword">new</span> TestSuite();</div><div class="line">        suite.addTestSuite(MyJUnitTest.class); <span class="comment">// 测试用例 class</span></div><div class="line">        <span class="keyword">return</span> suite;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<div>参考资料：<a href="http://sns.testin.cn/thread-1529-1-1.html" target="_blank" rel="external">http://sns.testin.cn/thread-1529-1-1.html</a></div><br><div>AndroidStudio：<a href="http://www.jianshu.com/p/03118c11c199" target="_blank" rel="external">http://www.jianshu.com/p/03118c11c199</a></div><br><div></div><br><div>附件(doc)：</div><br><div><a href="http://www.eraise.xyz/wp-content/uploads/2015/12/Android、JUnit深入浅出.doc" target="_blank" rel="external">Android、JUnit深入浅出</a></div>
+          Junit(单元测试)，好吧，我看啊看我依然不明白它有什么作用。只是对于单一的方法或许可以一测吧。
+每个JUnit测试都可以包含：测试前环境配置  –&gt; 测试用例 –&gt; 测试后资源重置。
+在看Android之前的，就先看看Java的吧，Java的比较简单，使用的是JUnit 4做的测试，
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/03/junit-e6-b5-8b-e8-af-95android/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -494,6 +437,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/12/02/e5-85-b3-e4-ba-8e-e6-88-91-e5-b8-b8-e7-94-a8-e6-a1-86-e6-9e-b6-e7-9a-84proguard-e6-b7-b7-e6-b7-86/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/02/e5-85-b3-e4-ba-8e-e6-88-91-e5-b8-b8-e7-94-a8-e6-a1-86-e6-9e-b6-e7-9a-84proguard-e6-b7-b7-e6-b7-86/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -515,26 +465,14 @@
       
         
           
-            <p>以前完全不懂得怎么混淆啊，一直感觉是很高端的技术，不过事实上就那样了，嗯，有的时候真拿那些奇怪的东西没办法，比如log4j，那就忽略吧！<span style="color: rgb(204, 120, 50); font-weight: bold; background-color: rgb(43, 43, 43); font-family: 宋体; font-size: 9pt; line-height: 1.5;">-ignorewarnings</span><div><br></div><div><pre style="background-color:#2b2b2b;color:#a9b7c6;font-family:'宋体';font-size:9.0pt;"><br><span style="color:#808080;">##—————Begin: proguard configuration common for all Android apps ———-<br></span><span style="color:#cc7832;font-weight:bold;">-optimizationpasses </span>5<br><span style="color:#cc7832;font-weight:bold;">-dontusemixedcaseclassnames<br></span><span style="color:#cc7832;font-weight:bold;">-dontskipnonpubliclibraryclasses<br></span><span style="color:#cc7832;font-weight:bold;">-dontskipnonpubliclibraryclassmembers<br></span><span style="color:#cc7832;font-weight:bold;">-dontpreverify<br></span><span style="color:#cc7832;font-weight:bold;">-verbose<br></span><span style="color:#cc7832;font-weight:bold;">-dump </span>class_files.txt<br><span style="color:#cc7832;font-weight:bold;">-printseeds </span>seeds.txt<br><span style="color:#cc7832;font-weight:bold;">-printusage </span>unused.txt<br><span style="color:#cc7832;font-weight:bold;">-printmapping </span>mapping.txt<br><span style="color:#cc7832;font-weight:bold;">-optimizations </span>!code/simplification/arithmetic,!field/<em>,!class/merging/</em></pre></div></p>
-<p><span style="color:#cc7832;font-weight:bold;">-allowaccessmodification<br></span><span style="color:#cc7832;font-weight:bold;">-keepattributes </span><em>Annotation</em><br><span style="color:#cc7832;font-weight:bold;">-renamesourcefileattribute </span>SourceFile<br><span style="color:#cc7832;font-weight:bold;">-keepattributes </span>SourceFile,LineNumberTable<br><span style="color:#cc7832;font-weight:bold;">-repackageclasses </span>‘’</p>
-<p><span style="color:#cc7832;font-weight:bold;">-keep </span>public class <em> extends android.app.Activity<br><span style="color:#cc7832;font-weight:bold;">-keep </span>public class </em> extends android.app.Application<br><span style="color:#cc7832;font-weight:bold;">-keep </span>public class <em> extends android.app.Service<br><span style="color:#cc7832;font-weight:bold;">-keep </span>public class </em> extends android.content.BroadcastReceiver<br><span style="color:#cc7832;font-weight:bold;">-keep </span>public class <em> extends android.content.ContentProvider<br><span style="color:#cc7832;font-weight:bold;">-keep </span>public class </em> extends android.app.backup.BackupAgentHelper<br><span style="color:#cc7832;font-weight:bold;">-keep </span>public class * extends android.preference.Preference<br><span style="color:#cc7832;font-weight:bold;">-keep </span>public class com.android.vending.licensing.ILicensingService<br><span style="color:#cc7832;font-weight:bold;">-dontnote </span>com.android.vending.licensing.ILicensingService</p>
-<p><span style="color:#808080;"># Explicitly preserve all serialization members. The Serializable interface<br></span><span style="color:#808080;"># is only a marker interface, so it wouldn’t save them.<br></span><span style="color:#cc7832;font-weight:bold;">-keepclassmembers </span>class * implements java.io.Serializable {<br><span style="color:#9876aa;">    static final long serialVersionUID;<br></span><span style="color:#9876aa;">    private static final java.io.ObjectStreamField[] serialPersistentFields;<br></span><span style="color:#9876aa;">    private void writeObject(java.io.ObjectOutputStream);<br></span><span style="color:#9876aa;">    private void readObject(java.io.ObjectInputStream);<br></span><span style="color:#9876aa;">    java.lang.Object writeReplace();<br></span><span style="color:#9876aa;">    java.lang.Object readResolve();<br></span>}</p>
-<p><span style="color:#808080;"># Preserve all native method names and the names of their classes.<br></span><span style="color:#cc7832;font-weight:bold;">-keepclasseswithmembernames </span>class * {<br><span style="color:#9876aa;">    native &lt;methods&gt;;<br></span>}</p>
-<p><span style="color:#cc7832;font-weight:bold;">-keepclasseswithmembernames </span>class * {<br><span style="color:#9876aa;">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet);<br></span>}</p>
-<p><span style="color:#cc7832;font-weight:bold;">-keepclasseswithmembernames </span>class * {<br><span style="color:#9876aa;">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);<br></span>}</p>
-<p><span style="color:#808080;"># Preserve static fields of inner classes of R classes that might be accessed<br></span><span style="color:#808080;"># through introspection.<br></span><span style="color:#cc7832;font-weight:bold;">-keepclassmembers </span>class <em>*.R$</em> {<br><span style="color:#9876aa;">  public static &lt;fields&gt;;<br></span>}</p>
-<p><span style="color:#808080;"># Preserve the special static methods that are required in all enumeration classes.<br></span><span style="color:#cc7832;font-weight:bold;">-keepclassmembers </span>enum <em> {<br><span style="color:#9876aa;">    public static <em>*[] values();<br></em></span><span style="color:#9876aa;">    public static </span></em> valueOf(java.lang.String);<br>}</p>
-<p><span style="color:#cc7832;font-weight:bold;">-keep </span>public class <em> {<br><span style="color:#9876aa;">    public protected </span></em>;<br>}</p>
-<p><span style="color:#cc7832;font-weight:bold;">-keep </span>class <em> implements android.os.Parcelable {<br><span style="color:#9876aa;">  public static final android.os.Parcelable$Creator </span></em>;<br>}<br><span style="color:#808080;">##—————End: proguard configuration common for all Android apps ———-</span><div><pre style="background-color:#2b2b2b;color:#a9b7c6;font-family:'宋体';font-size:9.0pt;"><br><span style="color:#808080;">##———– RxJava ——–<br></span><span style="color:#cc7832;font-weight:bold;">-keep </span>class rx.schedulers.Schedulers {<br><span style="color:#9876aa;">    public static &lt;methods&gt;;<br></span>}<br><span style="color:#cc7832;font-weight:bold;">-keep </span>class rx.schedulers.ImmediateScheduler {<br><span style="color:#9876aa;">    public &lt;methods&gt;;<br></span>}<br><span style="color:#cc7832;font-weight:bold;">-keep </span>class rx.schedulers.TestScheduler {<br><span style="color:#9876aa;">    public &lt;methods&gt;;<br></span>}<br><span style="color:#cc7832;font-weight:bold;">-keep </span>class rx.schedulers.Schedulers {<br><span style="color:#9876aa;">    public static ** test();<br></span>}</pre></div></p>
-<p><span style="color:#cc7832;font-weight:bold;">-keepclassmembers </span>class rx.internal.util.unsafe.<em>ArrayQueue</em>Field* {<br><span style="color:#9876aa;">    long producerIndex;<br></span><span style="color:#9876aa;">    long consumerIndex;<br></span>}</p>
-<p><span style="color:#cc7832;font-weight:bold;">-keepclassmembers </span>class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {<br><span style="color:#9876aa;">    long producerNode;<br></span><span style="color:#9876aa;">    long consumerNode;<br></span>}<br><div><pre style="background-color:#2b2b2b;color:#a9b7c6;font-family:'宋体';font-size:9.0pt;"><br><span style="color:#808080;">##—————Begin: proguard configuration for Gson  ———-<br></span><span style="color:#808080;"># Gson uses generic type information stored in a class file when working with fields. Proguard<br></span><span style="color:#808080;"># removes such information by default, so configure it to keep all of it.<br></span><span style="color:#cc7832;font-weight:bold;">-keepattributes </span>Signature</pre></div></p>
-<p><span style="color:#808080;"># For using GSON @Expose annotation<br></span><span style="color:#cc7832;font-weight:bold;">-keepattributes </span><em>Annotation</em></p>
-<p><span style="color:#808080;"># Gson specific classes<br></span><span style="color:#cc7832;font-weight:bold;">-keep </span>class sun.misc.Unsafe {<span style="color:#9876aa;"> <em>; </em></span>}<br><span style="color:#808080;">#-keep class com.google.gson.stream.** { ; }<br></span><span style="color:#808080;"><br></span><span style="color:#808080;"># Application classes that will be serialized/deserialized over Gson<br></span><span style="color:#cc7832;font-weight:bold;">-keep </span>class com.google.gson.examples.android.model.<em>* {<span style="color:#9876aa;"> </span></em>; }</p>
-<p><span style="color:#cc7832;font-weight:bold;">-keep </span>class <strong>.pojo.</strong> {<span style="color:#9876aa;"><em>;</em></span>}<br><div><pre style="background-color:#2b2b2b;color:#a9b7c6;font-family:'宋体';font-size:9.0pt;"><span style="color:#808080;">##——– ButterKnife ———<br></span><span style="color:#cc7832;font-weight:bold;">-keep </span>class butterknife.** {<span style="color:#9876aa;"> ; </span>}<br><span style="color:#cc7832;font-weight:bold;">-dontwarn </span>butterknife.internal.<strong><br><span style="color:#cc7832;font-weight:bold;">-keep </span>class </strong>$$ViewBinder {<span style="color:#9876aa;"> *; </span>}</pre></div></p>
-<p><span style="color:#cc7832;font-weight:bold;">-keepclasseswithmembernames </span>class <em> {<br><span style="color:#9876aa;">    @butterknife.</span></em> &lt;fields&gt;;<br>}</p>
-<p><span style="color:#cc7832;font-weight:bold;">-keepclasseswithmembernames </span>class <em> {<br><span style="color:#9876aa;">    @butterknife.</span></em> &lt;methods&gt;;<br>}<div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div></p>
+          以前完全不懂得怎么混淆啊，一直感觉是很高端的技术，不过事实上就那样了，嗯，有的时候真拿那些奇怪的东西没办法，比如log4j，那就忽略吧！-ignorewarnings##—————Begin: proguard configuration common for all Android apps ——
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/02/e5-85-b3-e4-ba-8e-e6-88-91-e5-b8-b8-e7-94-a8-e6-a1-86-e6-9e-b6-e7-9a-84proguard-e6-b7-b7-e6-b7-86/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -624,6 +562,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/28/android-4-4-sdk-int-19-e4-bb-a5-e5-90-8e-ef-bc-8c-e7-8a-b6-e6-80-81-e6-a0-8f-e7-9a-84-e9-80-8f-e6-98-8e/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/android-4-4-sdk-int-19-e4-bb-a5-e5-90-8e-ef-bc-8c-e7-8a-b6-e6-80-81-e6-a0-8f-e7-9a-84-e9-80-8f-e6-98-8e/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -645,94 +590,20 @@
       
         
           
-            <script id="wiz_editor_localize" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\localize.js?t=1446037758905" type="text/javascript" charset="utf-8"></script><script id="wizEditor" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\plugins\wizEditor.js?t=1446037758911" type="text/javascript" charset="utf-8"></script><script id="wizEditorHelper" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\plugins\editor_helper.js?t=1446037758935" type="text/javascript" charset="utf-8"></script>
-
-<p>4.4以后才支持的沉浸式<span style="color: #ff0000;">ActionBar+StatusBar</span>。</p>
-<p><div>在Java代码中，可以通过</div></p>
-<p><div></div></p>
-<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #bed6ff; font-family: 微软雅黑; background-color: #000000;">getWindow<span style="color: #d8d8d8;">().<span style="color: #ffffff;">setFlags</span>(<span style="text-decoration: underline; color: #d197d9;">WindowManager<span style="color: #d8d8d8;">.<span style="color: #d25252;">LayoutParams</span>.<span style="font-style: italic; color: #efc090;">FLAG_TRANSLUCENT_STATUS</span></span></span> | </span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #bed6ff; font-family: 微软雅黑; background-color: #000000;"><span style="color: #d8d8d8;"><span style="text-decoration: underline; color: #d197d9;">                                     WindowManager<span style="color: #d8d8d8;">.<span style="color: #d25252;">LayoutParams</span>.<span style="font-style: italic; color: #efc090;">FLAG_TRANSLUCENT_NAVIGATION</span></span></span>,</span></span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';">                        <span style="text-decoration: underline; color: #d197d9;">WindowManager<span style="color: #d8d8d8;">.<span style="color: #d25252;">LayoutParams</span>.<span style="font-style: italic; color: #efc090;">FLAG_TRANSLUCENT_NAVIGATION</span></span></span> |</span></span><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';">                                                         <span style="text-decoration: underline; color: #d197d9;">WindowManager<span style="color: #d8d8d8;">.<span style="color: #d25252;">LayoutParams</span>.<span style="font-style: italic; color: #efc090;">FLAG_TRANSLUCENT_STATUS</span></span></span>);</span> </span></p>
-<p></p>
-<p><div>进行设置，另外还有一种方法，效果和这个不一样，它是全屏的，状态栏透明且可以下滑：</div></p>
-<p><div></div></p>
-<p><div><!--WizRtf2Html Charset=0 --><span style="text-decoration: underline; font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">mDecorView<span style="text-decoration: none;">.setSystemUiVisibility(</span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_LAYOUT_STABLE</span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                | <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                | <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                | <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_HIDE_NAVIGATION</span> <span style="color: #c7dd0c;">// hide <span style="text-decoration: underline;">nav</span> bar</span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                | <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_FULLSCREEN</span> <span style="color: #c7dd0c;">// hide status bar</span></span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';">                | <span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">SYSTEM_UI_FLAG_IMMERSIVE</span>);</span>  </span></p>
-<p></p>
-<p><div>在 <span style="color: #0000ff;">xml style </span>中的设置方式：</div></p>
-<p><div></div></p>
-<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #79abff; font-family: 微软雅黑; background-color: #000000;">&lt;<span style="color: #bed6ff;">item<span style="color: windowtext;"> </span>name<span style="color: #d8d8d8;">=<span style="color: #ffc600;">“android:windowTranslucentStatus”</span></span></span>&gt;<span style="color: #d8d8d8;">true</span>&lt;/<span style="color: #bed6ff;">item</span>&gt;</span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';"><span style="color: #79abff;">&lt;<span style="color: #bed6ff;">item<span style="color: windowtext;"> </span>name</span></span>=<span style="color: #ffc600;">“android:windowTranslucentNavigation”<span style="color: #79abff;">&gt;</span></span>true<span style="color: #79abff;">&lt;/<span style="color: #bed6ff;">item</span>&gt;</span></span>  </span></p>
-<p></p>
-<p><div>不过在 <span style="color: #0000ff;">xml </span>中，不知道出于什么原因，我继承 AppTheme 后，给一个<span style="color: #0000ff;">Activity</span>(不是<span style="color: #0000ff;">Application</span>) 设置了这个<span style="color: #0000ff;">style</span>，结果无效。</div></p>
-<p><div>在5.0中，可以设置标题栏颜色：</div></p>
-<p><div></div></p>
-<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #79abff; font-family: 微软雅黑; background-color: #000000;">&lt;<span style="color: #bed6ff;">item<span style="color: windowtext;"> </span>name<span style="color: #d8d8d8;">=<span style="color: #ffc600;">“android:colorPrimary”</span></span></span>&gt;<span style="color: #d8d8d8;">?attr/bg_title_color</span>&lt;/<span style="color: #bed6ff;">item</span>&gt; </span><span style="font-size: 10pt; font-family: 微软雅黑; background-color: #000000;"><span style="color: #3cb371;">// ActionBar</span></span></div></p>
-<p><div><span style="font-size: 10pt; font-family: 微软雅黑; background-color: #000000;"><span style="color: #79abff;">&lt;<span style="color: #bed6ff;">item<span style="color: windowtext;"> </span>name</span></span><span style="color: #d8d8d8;">=</span><span style="color: #ffc600;">“android:colorPrimaryDark”<span style="color: #79abff;">&gt;</span></span><span style="color: #d8d8d8;">?attr/bg_title_color</span><span style="color: #79abff;">&lt;/<span style="color: #bed6ff;">item</span>&gt;  </span><span style="color: #3cb371;">// 状态栏</span></span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; font-family: 微软雅黑;"><span style="color: #79abff;">&lt;<span style="color: #bed6ff;">item<span style="color: windowtext;"> </span>name</span></span><span style="color: #d8d8d8;">=</span><span style="color: #ffc600;">“android:navigationBarColor”<span style="color: #79abff;">&gt;</span></span><span style="color: #d8d8d8;">?attr/bg_title_color</span><span style="color: #79abff;">&lt;/<span style="color: #bed6ff;">item</span>&gt; </span><span style="color: #3cb371;">// 导航栏</span></span> </span></p>
-<p></p>
-<p><div>这些基于原生的设置，可能不是很方便(简单的说呢，就是使用 translucentStatus 的时候，布局会跑到状态栏背后)，可能需要添加一个View或设置Margin/Padding来让它不跑上去，这就需要获取ActionBar的高度及StausBar的高度了：</div></p>
-<p><div>各系统控件的高度代码获取(代码取自 SystemBarTint 的 SystemBarConfig)：</div></p>
-<p><div></div></p>
-<p><div><!--WizRtf2Html Charset=0 --><span style="font-weight: bold; font-size: 10pt; font-family: 微软雅黑; background-color: #000000;"><span style="color: #ffffff;">private</span><span style="color: #d8d8d8; font-weight: normal;"> </span><span style="color: #ffffff;">static</span><span style="color: #d8d8d8; font-weight: normal;"> </span><span style="color: #ffffff;">final</span><span style="color: #d8d8d8; font-weight: normal;"> <span style="color: #d25252;">String</span> <span style="font-style: italic; text-decoration: underline; color: #efc090;">STATUS_BAR_HEIGHT_RES_NAME</span> = <span style="color: #ffc600;">“status_bar_height”</span>; </span><span style="font-weight: normal;"><span style="color: #3cb371;">// 状态栏高度</span></span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">    <span style="font-weight: bold; color: #ffffff;">private</span> <span style="font-weight: bold; color: #ffffff;">static</span> <span style="font-weight: bold; color: #ffffff;">final</span> <span style="color: #d25252;">String</span> <span style="font-style: italic; text-decoration: underline; color: #efc090;">NAV_BAR_HEIGHT_RES_NAME</span> = <span style="color: #ffc600;">“navigation_bar_height”</span>; </span><span style="font-size: 10pt; font-family: 微软雅黑; background-color: #000000;"><span style="color: #3cb371;"> // 导航栏高度</span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">    <span style="font-weight: bold; color: #ffffff;">private</span> <span style="font-weight: bold; color: #ffffff;">static</span> <span style="font-weight: bold; color: #ffffff;">final</span> <span style="color: #d25252;">String</span> <span style="font-style: italic; text-decoration: underline; color: #efc090;">NAV_BAR_HEIGHT_LANDSCAPE_RES_NAME</span> = <span style="color: #ffc600;">“navigation_bar_height_landscape”</span>;</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">    <span style="font-weight: bold; color: #ffffff;">private</span> <span style="font-weight: bold; color: #ffffff;">static</span> <span style="font-weight: bold; color: #ffffff;">final</span> <span style="color: #d25252;">String</span> <span style="font-style: italic; text-decoration: underline; color: #efc090;">NAV_BAR_WIDTH_RES_NAME</span> = <span style="color: #ffc600;">“navigation_bar_width”</span>;</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">    <span style="font-weight: bold; color: #ffffff;">private</span> <span style="font-weight: bold; color: #ffffff;">int</span> <span style="font-weight: bold; color: #ffffff;">getInternalDimensionSize</span>(<span style="text-decoration: underline; color: #d25252;">Resources</span> <span style="color: #79abff;">res</span>, <span style="color: #d25252;">String</span> <span style="color: #79abff;">key</span>) {</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">        <span style="font-weight: bold; color: #ffffff;">int</span> <span style="font-weight: bold; color: #bed6ff;">result</span> = <span style="color: #7fb347;">0</span>;</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">        <span style="font-weight: bold; color: #ffffff;">int</span> <span style="font-weight: bold; color: #bed6ff;">resourceId</span> = <span style="color: #79abff;">res</span>.getIdentifier(<span style="color: #79abff;">key</span>, <span style="color: #ffc600;">“dimen”</span>, <span style="color: #ffc600;">“android”</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">        <span style="font-weight: bold; color: #ffffff;">if</span> (<span style="color: #79abff;">resourceId</span> &gt; <span style="color: #7fb347;">0</span>) {</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #79abff;">result</span> = <span style="color: #79abff;">res</span>.getDimensionPixelSize(<span style="color: #79abff;">resourceId</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">        }</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">        <span style="font-weight: bold; color: #ffffff;">return</span> <span style="color: #79abff;">result</span>;</span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';">    }</span>  </span></p>
-<p></p>
-<p><div></div></p>
-<p><div>或通过开源项目 <a href="http://https://github.com/jgilfelt/systembartint" target="_blank" rel="external">SystemBarTint </a>可以达到一个相对不错的效果，SystemBarTint 设置沉浸式以后，添加代码：</div></p>
-<p><div></div></p>
-<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #bed6ff; font-family: 微软雅黑; background-color: #000000;">mSystemBarTintManager<span style="color: #d8d8d8;"> = <span style="font-weight: bold; color: #ffffff;">new</span> <span style="color: #ffffff;">SystemBarTintManager</span>(<span style="font-weight: bold; color: #ffffff;">this</span>);</span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"><span style="color: #bed6ff;">mSystemBarTintManager</span>.<span style="color: #ffffff;">setStatusBarTintEnabled</span>(<span style="font-weight: bold; color: #ffffff;">true</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"><span style="color: #bed6ff;">mSystemBarTintManager</span>.<span style="color: #ffffff;">setNavigationBarTintEnabled</span>(<span style="font-weight: bold; color: #ffffff;">true</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"> <span style="color: #c7dd0c;">// 获取到颜色</span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"><span style="color: #d25252;">TypedArray</span> <span style="font-weight: bold; color: #bed6ff;">_ta</span> = <span style="color: #bed6ff;">getTheme</span>().<span style="color: #ffffff;">obtainStyledAttributes</span>(<span style="color: #d25252;">YogaUtil</span>.<span style="font-style: italic; color: #bed6ff;">getInstance</span>().<span style="color: #ffffff;">getThemeResId</span>(), <span style="font-weight: bold; color: #ffffff;">new</span> <span style="font-weight: bold; color: #ffffff;">int</span>[]{<span style="color: #d25252;">R</span>.<span style="color: #d25252;">attr</span>.<span style="font-style: italic; color: #efc090;">bg_title_color</span>});</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;"> <span style="color: #bed6ff;">mSystemBarTintManager</span>.<span style="color: #ffffff;">setStatusBarTintColor</span>(<span style="color: #79abff;">_ta</span>.<span style="color: #ffffff;">getColor</span>(<span style="color: #7fb347;">0</span>, <span style="color: #bed6ff;">getTitleColor</span>()));</span></div><br><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';"><span style="color: #79abff;"><span style="background-color: #000000;">_ta</span></span><span style="background-color: #000000;">.<span style="color: #ffffff;">recycle</span>();</span></span><span style="background-color: #000000;">  </span></p>
-<p></p>
-<p><div>达到效果：</div></p>
-<p><div><a href=""><img src="/image/84d2ab13-2c75-491f-a2b6-50e5e88e820b.png" alt="84d2ab13-2c75-491f-a2b6-50e5e88e820b"></a></div></p>
-<p><div>SystemBarTint加通过类似代码:</div></p>
-<p><div></div></p>
-<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #c7dd0c;">// 状态栏透明</span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #d25252;">BaseActivity</span> <span style="font-weight: bold; color: #bed6ff;">_ba</span> = ((<span style="color: #d25252;">BaseActivity</span>) <span style="color: #79abff;">_activity</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #79abff;">_ba</span>.<span style="color: #ffffff;">getSystemBarTintManager</span>().<span style="color: #ffffff;">setStatusBarAlpha</span>(<span style="color: #7fb347;">0</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="color: #bed6ff;">setTitle</span>(<span style="font-weight: bold; color: #ffffff;">null</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            <span style="font-weight: bold; color: #ffffff;">try</span> {</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="font-weight: bold; color: #ffffff;">if</span> (android.os.<span style="color: #d25252;">Build</span>.<span style="color: #d25252;">VERSION</span>.<span style="font-style: italic; color: #efc090;">SDK_INT</span> &gt;= android.os.<span style="color: #d25252;">Build</span>.<span style="color: #d25252;">VERSION_CODES</span>.<span style="font-style: italic; color: #efc090;">KITKAT</span>) {</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                    <span style="color: #79abff;">_activity</span>.<span style="color: #ffffff;">getActionBar</span>().<span style="color: #bed6ff;">setBackgroundDrawable</span>(<span style="color: #bed6ff;">getResources</span>().<span style="color: #d25252;">getDrawable</span>(<span style="color: #d25252;">R</span>.<span style="color: #d25252;">drawable</span>.<span style="font-style: italic; color: #efc090;">bg_transparent</span>));</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                }</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #c7dd0c;">// 设置按钮</span></span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #d25252;">View</span> <span style="font-weight: bold; color: #bed6ff;">_customView</span> = <span style="color: #79abff;">_activity</span>.<span style="color: #ffffff;">getActionBar</span>().<span style="color: #bed6ff;">getCustomView</span>();</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #d25252;">Button</span> <span style="font-weight: bold; color: #bed6ff;">_btnLeft</span> = (<span style="color: #d25252;">Button</span>) <span style="color: #79abff;">_customView</span>.<span style="color: #ffffff;">findViewById</span>(<span style="color: #d25252;">R</span>.<span style="color: #d25252;">id</span>.<span style="font-style: italic; color: #efc090;">btn_title_left</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnLeft</span>.<span style="color: #ffffff;">setText</span>(<span style="color: #d25252;">R</span>.<span style="color: #d25252;">string</span>.<span style="font-style: italic; color: #efc090;">xiamen</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnLeft</span>.<span style="color: #ffffff;">setOnClickListener</span>(<span style="font-weight: bold; color: #ffffff;">this</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnLeft</span>.<span style="color: #ffffff;">setVisibility</span>(<span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">VISIBLE</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #d25252;">Button</span> <span style="font-weight: bold; color: #bed6ff;">_btnRight</span> = (<span style="color: #d25252;">Button</span>) <span style="color: #79abff;">_customView</span>.<span style="color: #ffffff;">findViewById</span>(<span style="color: #d25252;">R</span>.<span style="color: #d25252;">id</span>.<span style="font-style: italic; color: #efc090;">btn_title_right</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnRight</span>.<span style="color: #ffffff;">setText</span>(<span style="color: #d25252;">R</span>.<span style="color: #d25252;">string</span>.<span style="font-style: italic; color: #efc090;">preference</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnRight</span>.<span style="color: #ffffff;">setOnClickListener</span>(<span style="font-weight: bold; color: #ffffff;">this</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                <span style="color: #79abff;">_btnRight</span>.<span style="color: #ffffff;">setVisibility</span>(<span style="color: #d25252;">View</span>.<span style="font-style: italic; color: #efc090;">VISIBLE</span>);</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">            } <span style="font-weight: bold; color: #ffffff;">catch</span> (<span style="color: #d25252;">Exception</span> <span style="font-weight: bold; color: #bed6ff;">e</span>) {</span></div></p>
-<p><div><span style="font-size: 10pt; color: #d8d8d8; font-family: 微软雅黑; background-color: #000000;">                </span></div><br><span style="background-color: #000000;"><span style="font-size: 10pt; color: #d8d8d8; font-family: '微软雅黑';">            }</span>  </span></p>
-<p></p>
-<p><div>我实现了效果：</div></p>
-<p><div>(4.1系统<span style="font-size: 10.5pt; line-height: 1.5;">)</span></div></p>
-<p><div><a href="6717b0fc-9466-4a94-a984-d2c549ac3b47.png"><img src="/image/6717b0fc-9466-4a94-a984-d2c549ac3b47.png" alt="6717b0fc-9466-4a94-a984-d2c549ac3b47"></a></div></p>
-<p><div>(4.4系统)</div></p>
-<p><div><a href="42b0849f-e051-47bc-87b8-fd88ccb105e4.jpg"><img src="/image/42b0849f-e051-47bc-87b8-fd88ccb105e4.jpg" alt="42b0849f-e051-47bc-87b8-fd88ccb105e4"></a></div></p>
-<p><div>参考资料：</div></p>
-<p><div><span style="font-family: 微软雅黑;">    官方对4.4沉浸式体验的教程：<a href="http://https://developer.android.com/training/system-ui/immersive.html" target="_blank" rel="external">https://developer.android.com/training/system-ui/immersive.html</a></span></div></p>
-<p><div>    SystemBarTint：<a href="http://https://github.com/jgilfelt/systembartint" target="_blank" rel="external">https://github.com/jgilfelt/SystemBarTint</a></div><br>&nbsp;</p>
-<p>&nbsp;</p>
-
           
+
+4.4以后才支持的沉浸式ActionBar+StatusBar。
+在Java代码中，可以通过
+
+getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | 
+                         
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/28/android-4-4-sdk-int-19-e4-bb-a5-e5-90-8e-ef-bc-8c-e7-8a-b6-e6-80-81-e6-a0-8f-e7-9a-84-e9-80-8f-e6-98-8e/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -822,6 +693,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/28/e8-8e-b7-e5-8f-96app-e5-9c-a8-e7-89-b9-e5-ae-9adpi-e4-b8-8b-e7-9a-84-e5-9b-be-e7-89-87-e6-8c-87-e5-ae-9adpi-e7-9a-84activity-icon/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/e8-8e-b7-e5-8f-96app-e5-9c-a8-e7-89-b9-e5-ae-9adpi-e4-b8-8b-e7-9a-84-e5-9b-be-e7-89-87-e6-8c-87-e5-ae-9adpi-e7-9a-84activity-icon/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -843,16 +721,16 @@
       
         
           
-            <p>获取  res 下的图片，最重要的是</p>
-<p><div><span style="color: #ff0000;"><span style="font-size: 10pt; font-family: 微软雅黑;">Package.getResourcesForActivity(component).getDrawableForDensity(resId, Display.Metrics.XXHIGH);</span>  </span></div></p>
-<p><div>这个方法，即通过DrawableForDensity去获取，这个方法的加入是API 15，但是在14的时候已经可以调用，更早的没有测试。</div></p>
-<p><div>以下是获取一个Activity的Icon的代码：</div><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">   * 通过包名和Activity名获取Activity的icon,如果得不到activity的icon则获取包的</div><div class="line">   * <span class="doctag">@param</span> packageName</div><div class="line">   * <span class="doctag">@param</span> activityName</div><div class="line">   * <span class="doctag">@return</span></div><div class="line">   */</div><div class="line">  <span class="meta">@SuppressLint</span>(“NewApi”)</div><div class="line">  <span class="function"><span class="keyword">public</span> Drawable <span class="title">getActivityIcon</span><span class="params">(String packageName, String activityName)</span> </span>&#123;</div><div class="line">      ComponentName component = <span class="keyword">new</span> ComponentName(packageName, activityName);</div><div class="line">      PackageManager pm = mContext.getPackageManager();</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">          <span class="keyword">int</span> iconId = pm.getActivityInfo(component, <span class="number">0</span>).icon;</div><div class="line">          <span class="keyword">if</span> (iconId == <span class="number">0</span>) &#123;</div><div class="line">              iconId = pm.getApplicationInfo(packageName, <span class="number">0</span>).icon;</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">if</span> (iconId &gt; <span class="number">0</span> &amp;&amp; Build.VERSION.SDK_INT &gt;= <span class="number">14</span>) &#123;</div><div class="line"><span class="comment">//                Method method = Resource.class.getMethod(“getDrawableForDensity”, </span></div><div class="line">                                            <span class="keyword">int</span>.class, <span class="keyword">int</span>.class);</div><div class="line"><span class="comment">//                return (Drawable) method.invoke(pm.getResourcesForActivity(component),</span></div><div class="line">                                            iconId, DisplayMetrics.DENSITY_XXHIGH);</div><div class="line">              Drawable d = <span class="keyword">null</span>;</div><div class="line">              <span class="keyword">int</span> displayMetrics[] = &#123; <span class="number">640</span>, DisplayMetrics.DENSITY_XXHIGH,</div><div class="line">                                           DisplayMetrics.DENSITY_XHIGH,</div><div class="line">                                           DisplayMetrics.DENSITY_HIGH &#125;;</div><div class="line">              <span class="keyword">for</span> (<span class="keyword">int</span> dm : displayMetrics) &#123;</div><div class="line">                  d = pm.getResourcesForActivity(component).getDrawableForDensity(iconId, dm);</div><div class="line">                  <span class="keyword">if</span> (d != <span class="keyword">null</span>) &#123;</div><div class="line">                      <span class="keyword">return</span> d;</div><div class="line">                  &#125;</div><div class="line">              &#125;</div><div class="line">              <span class="keyword">return</span> pm.getActivityIcon(component);</div><div class="line">          &#125; <span class="keyword">else</span> &#123;</div><div class="line">              <span class="keyword">return</span> pm.getActivityIcon(component);</div><div class="line">          &#125;</div><div class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">          <span class="keyword">try</span> &#123;</div><div class="line">              <span class="keyword">return</span> pm.getApplicationIcon(packageName);</div><div class="line">          &#125; <span class="keyword">catch</span> (NameNotFoundException e1) &#123;</div><div class="line">              <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
-<p><div>这个方法得到尽可能大(极限是 xxxhdpi)的ActivityIcon，当得不到ActivityIcon就拿PackageIcon</div></p>
-<p><div></div></p>
-<p><div></div><br><br>&nbsp;</p>
-<p>&nbsp;</p>
+          获取  res 下的图片，最重要的是
+Package.getResourcesForActivity(component).getDrawableForDensity(resId, Display.Metrics.XXHIGH);  
+这个方法，即通过DrawableForDensity去获取，这个
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/28/e8-8e-b7-e5-8f-96app-e5-9c-a8-e7-89-b9-e5-ae-9adpi-e4-b8-8b-e7-9a-84-e5-9b-be-e7-89-87-e6-8c-87-e5-ae-9adpi-e7-9a-84activity-icon/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -942,6 +820,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/28/imagespan-e5-8f-af-e7-82-b9-e5-87-bb-e3-80-81-e5-9b-be-e7-89-87-e4-b8-8e-e8-ae-be-e7-bd-ae-e4-b8-8d-e4-b8-80-e6-a0-b7-e5-a4-a7/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/imagespan-e5-8f-af-e7-82-b9-e5-87-bb-e3-80-81-e5-9b-be-e7-89-87-e4-b8-8e-e8-ae-be-e7-bd-ae-e4-b8-8d-e4-b8-80-e6-a0-b7-e5-a4-a7/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -963,14 +848,14 @@
       
         
           
-            <p><span style="color: #0000ff;">ImageSpan</span>可以在<span style="color: #0000ff;">TextView</span>中嵌入图片。又或者说，<span style="color: #993366;">android.text.style.*</span> 里面的东西可以放在 <span style="color: #0000ff;">SpannableString</span> 里再设置到 <span style="color: #0000ff;">TextView </span>里可以使 <span style="color: #0000ff;">TextView </span>显示出不同的效果（ <span style="color: #0000ff;">Html</span>.<span style="color: #000080;">fromHtml()</span> 就是返回一个<span style="color: #0000ff;">SpannableString</span>或<span style="color: #0000ff;">Spannabed</span>）。在设置 <span style="color: #0000ff;">ImageSpan </span>的时候，出现了一个问题是设置进行的 <span style="color: #0000ff;">Bitmap </span>画出来的大小并不是原来 <span style="color: #0000ff;">Bitmap </span>的大小，经过源码查看，发现是 <span style="color: #0000ff;">ImageSpan </span>当中通过 new <span style="color: #0000ff;">BitmapDrawable</span>(<span style="color: #000080;">context.getResoutces(), b</span>) 或 <span style="color: #993366;">new</span> <span style="color: #0000ff;">BitmapDrawable</span>(b) 生成 <span style="color: #0000ff;">Drawable </span>导致的。</p>
-<p><div>根据 api ，new <span style="color: #0000ff;">BitmapDrawable</span>的时候不传入 <span style="color: #0000ff;">Context</span> ，则是不处理密度生成<span style="color: #0000ff;">Drawable</span>，这个时候就会出现设置进去的 <span style="color: #0000ff;">Bitmap </span>跟画出来的图片大小不一致，达不到我想要的效果。</div></p>
-<p><div><span style="color: #0000ff;">TextView</span>设置<span style="color: #0000ff;">SpannableString</span>，也是可以做点击的，对于 Span 的监听，主要是在 <span style="color: #0000ff;">TextView</span>.<span style="color: #000080;">setMovementMethod()</span> 方法当中传入的方法中的问题，原本我们可以通过 <span style="color: #0000ff;">TextView</span>.<span style="color: #000080;">setMovementMethod</span>(<span style="color: #993366;">new </span><span style="color: #0000ff;">LinkMovementMethod</span>()) 使 <span style="color: #0000ff;">ClickableSpan</span>(<span style="color: #0000ff;">UrlSpan</span>) 生效，但是<span style="color: #0000ff;">ImageSpan</span>本身并没有实现<span style="color: #0000ff;">ClickableSpan</span>，而在 <span style="color: #0000ff;">LinkMovementMethod </span>中，处理的只有<span style="color: #0000ff;">ClickableSpan</span>，所以我们重写卫<span style="color: #0000ff;">LinkMovementMethod</span>，使之处理 <span style="color: #0000ff;">ImageSpan</span>， 同时需要重写 <span style="color: #0000ff;">ImageSpan </span>使之拥有 <span style="color: #000080;">onClick </span>(或其他方法，只要在 <span style="color: #0000ff;">LinkMovementMethod</span> 的 <span style="color: #000080;">onTouchEvent </span>中调用即可)。</div></p>
-<p><div></div></p>
-<p><div>参考资料： <a href="http://www.cnblogs.com/luction/p/3645210.html" target="_blank" rel="external">http://www.cnblogs.com/luction/p/3645210.html</a></div><br>&nbsp;</p>
-<p>&nbsp;</p>
+          ImageSpan可以在TextView中嵌入图片。又或者说，android.text.style.* 里面的东西可以放在 SpannableString 里再设置到 TextView 里可以使 TextView 显示出不同的效果（ Html.fromHtml() 就是返回一个SpannableSt
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/28/imagespan-e5-8f-af-e7-82-b9-e5-87-bb-e3-80-81-e5-9b-be-e7-89-87-e4-b8-8e-e8-ae-be-e7-bd-ae-e4-b8-8d-e4-b8-80-e6-a0-b7-e5-a4-a7/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1060,6 +945,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/28/e5-8f-aa-e5-9c-a8-e4-b8-bb-e7-95-8c-e9-9d-a2-e5-ba-94-e7-94-a8-e4-b8-8a-e6-98-be-e7-a4-ba-e7-9a-84-e6-82-ac-e6-b5-ae-e7-aa-97/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/e5-8f-aa-e5-9c-a8-e4-b8-bb-e7-95-8c-e9-9d-a2-e5-ba-94-e7-94-a8-e4-b8-8a-e6-98-be-e7-a4-ba-e7-9a-84-e6-82-ac-e6-b5-ae-e7-aa-97/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -1081,14 +973,19 @@
       
         
           
-            <p><script id="wiz_editor_localize" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\localize.js?t=1446036111862" type="text/javascript" charset="utf-8"></script><script id="wizEditor" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\plugins\wizEditor.js?t=1446036111875" type="text/javascript" charset="utf-8"></script><script id="wizEditorHelper" src="D:\Program Files (x86)\WizNote\WizTools\htmleditor\plugins\editor_helper.js?t=1446036111892" type="text/javascript" charset="utf-8"></script></p>
-<p><div></div></p>
-<p><div><span style="color: #3366ff; font-family: Consolas;"><span style="font-size: 15px; line-height: 22px;"><strong>悬浮窗是把控件添加到WindowManager并且设置其 WindowManager.Layoutparams设置为包含控件大小、类型为ALERT等可弹出的等。</strong></span></span></div></p>
-<p><div><span style="color: #3366ff; font-family: Consolas;"><span style="font-size: 15px; line-height: 22px;"><strong>悬浮窗用处很多，其中包括：ListView/GridView的拖动、Toast等</strong></span></span></div></p>
-<p><div><span style="color: #3f5fbf; font-family: Consolas;"><span style="font-size: 15px; line-height: 22px;"> </span></span></div></p>
-<p><div><!--WizRtf2Html Charset=0 --><span style="font-size: 11pt; color: #3f5fbf; font-family: 'Consolas';"><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 在 manifest.xml 中应该配置权限 android.permission.SYSTEM_ALERT_WINDOW</div><div class="line"> * 为了只在主界面应用才显示，需要获取任务栈，</div><div class="line"> * 需要权限 android.permission.GET_TASKS</div><div class="line"> * 把悬浮窗布局/控件添加到 WindowManager 上，</div><div class="line"> * 并且设置 WindowManager.LayoutParams 即可，</div><div class="line"> * 通过监听触摸事件，并且更新 WindowManager.LayoutParams 的x,y就可以更新位置</div><div class="line"> * <span class="doctag">@author</span>: 思落羽</div><div class="line"> * <span class="doctag">@date</span>: 2014–2–12</div><div class="line"> * <span class="doctag">@Description</span>:</div><div class="line"> */</div></pre></td></tr></table></figure></span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SuspendButtonService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACTION_OPERATE = “action_operate”;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">short</span> OPERATE_SHOW = <span class="number">1</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">short</span> OPERATE_HIDE = <span class="number">2</span>;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">boolean</span> added = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">protected</span> <span class="keyword">boolean</span> show = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">protected</span> WindowManager.LayoutParams wmParams;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 检查当前是否为主界面应用</div><div class="line">     */</div><div class="line">    <span class="keyword">protected</span> Handler hCheckMain;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 主界面包名</div><div class="line">     */</div><div class="line">    <span class="keyword">protected</span> List&lt;String&gt; homeNames;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> Button btn;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate();</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">(Intent intent, <span class="keyword">int</span> startId)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (intent != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">/* 获取操作来确定当前应该显示或是取消显示 */</span></div><div class="line">            <span class="keyword">short</span> operate = intent.getShortExtra(ACTION_OPERATE, (<span class="keyword">short</span>)<span class="number">0</span>);</div><div class="line">            <span class="keyword">switch</span>(operate) &#123;</div><div class="line">            <span class="keyword">case</span> OPERATE_SHOW:</div><div class="line">                added = <span class="keyword">true</span>;</div><div class="line">                show();</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> OPERATE_HIDE:</div><div class="line">                added = <span class="keyword">false</span>;</div><div class="line">                hide();</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 初始化共用的对象</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">/* 2003是 WindowManager.LayoutParams.TYPE_SySTEM_ALERT 的值</span></div><div class="line">         * 初始化 WindowManager.LayoutParams */</div><div class="line">        wmParams = <span class="keyword">new</span> WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT,</div><div class="line">                WindowManager.LayoutParams.WRAP_CONTENT, <span class="number">2003</span>,</div><div class="line">                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,</div><div class="line">                PixelFormat.RGBA_8888); <span class="comment">// 类型要为透明才不会把背景也覆盖掉</span></div><div class="line">        <span class="comment">/* 获取悬浮窗控件 */</span></div><div class="line">        btn = (Button) LayoutInflater.from(<span class="keyword">this</span>)</div><div class="line">                .inflate(R.layout.demo_suspend_button, <span class="keyword">null</span>);</div><div class="line">        btn.setOnTouchListener(<span class="keyword">new</span> TouchBtn());</div><div class="line">        btn.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line"></div><div class="line">                Toast.makeText(SuspendButtonService.<span class="keyword">this</span>, “点击了悬浮窗”, Toast.LENGTH_SHORT).show();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取到桌面应用的应用名称</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> List&lt;String&gt; <span class="title">getHomes</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        List&lt;String&gt; names = <span class="keyword">new</span> LinkedList&lt;String&gt;();</div><div class="line">        PackageManager packageManager = getPackageManager();</div><div class="line">        <span class="comment">/* 找出action为 Intent.ACTION_MAIN，</span></div><div class="line">         * Category为Intent.CATEGORY_HOME的包的包名，这个包就是主界面的包 */</div><div class="line">        Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_MAIN);</div><div class="line">        intent.addCategory(Intent.CATEGORY_HOME);</div><div class="line">        <span class="comment">/* 查找intent可以唤醒的Activity的信息 */</span></div><div class="line">        List&lt;ResolveInfo&gt; resolveInfos = packageManager</div><div class="line">                .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);</div><div class="line">        <span class="keyword">for</span> (ResolveInfo resolveInfo : resolveInfos) &#123;</div><div class="line">            names.add(resolveInfo.activityInfo.packageName);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> names;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 把悬浮窗添加到 WindowManager上</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (!show) &#123;</div><div class="line">            show = <span class="keyword">true</span>;</div><div class="line">            <span class="comment">/* 获取 WindowManager */</span></div><div class="line">            WindowManager wm = (WindowManager) getSystemService(Service.WINDOW_SERVICE);</div><div class="line">            wm.addView(btn, wmParams);</div><div class="line">            checkMain();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 把悬浮穿从 WindowManager 上移除</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">hide</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (show) &#123;</div><div class="line">            show = <span class="keyword">false</span>;</div><div class="line">            <span class="comment">/* 获取 WindowManager */</span></div><div class="line">            WindowManager wm = (WindowManager) getSystemService(Service.WINDOW_SERVICE);</div><div class="line">            wm.removeView(btn);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 检查当前界面是否在主界面，悬浮穿控件为只在主界面显示</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">checkMain</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">/* hCheckMain 为空就新建 */</span></div><div class="line">        <span class="keyword">if</span> (hCheckMain == <span class="keyword">null</span>) &#123;</div><div class="line">            homeNames = getHomes();</div><div class="line">            hCheckMain = <span class="keyword">new</span> Handler(<span class="keyword">new</span> Handler.Callback() &#123;</div><div class="line"></div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">                    <span class="keyword">if</span> (isHome()) &#123;</div><div class="line">                        <span class="keyword">if</span> (!show)</div><div class="line">                            show();</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="keyword">if</span> (show)</div><div class="line">                            hide();</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span> (added) &#123;</div><div class="line">                        <span class="comment">/* 1秒后扫描当前是否需要显示 */</span></div><div class="line">                        hCheckMain.sendEmptyMessageDelayed(<span class="number">0</span>, <span class="number">1000</span>);</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">/* 1秒扫描一次当前是否在主界面 */</span></div><div class="line">        hCheckMain.sendEmptyMessageDelayed(<span class="number">0</span>, <span class="number">1000</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 当前界面是否为主界面</div><div class="line">     * <span class="doctag">@return</span> 为Home界面则返回true，否则为false</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">isHome</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">/* 获取 ActivityManager ，检查是否存在主界面 */</span></div><div class="line">        ActivityManager activityManager =</div><div class="line">                (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);</div><div class="line">        <span class="comment">/* 获取当前正在运行的任务 */</span></div><div class="line">        List&lt;RunningTaskInfo&gt; infos = activityManager.getRunningTasks(<span class="number">1</span>);</div><div class="line">        <span class="comment">/* 主界面是否包含了当前正在运行的任务的包名 */</span></div><div class="line">        <span class="comment">/* RunningTaskInfo 是任务栈信息，得到栈顶的Activity再去获取期包名 */</span></div><div class="line">        <span class="keyword">return</span> homeNames.contains(infos.get(<span class="number">0</span>).topActivity.getPackageName());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="class"><span class="keyword">class</span> <span class="title">TouchBtn</span> <span class="keyword">implements</span> <span class="title">OnTouchListener</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">float</span> x;</div><div class="line">        <span class="keyword">float</span> y;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;</div><div class="line"></div><div class="line">            <span class="keyword">switch</span> (event.getAction()) &#123;</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">                down(v, event);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">                up(v, event);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line">                move(v, event);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;</div><div class="line">            <span class="comment">/* 按下时记录按下的坐标 */</span></div><div class="line">            x = event.getX();</div><div class="line">            y = event.getY();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">up</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (x == event.getX() &amp;&amp; y == event.getY()) &#123;</div><div class="line">                <span class="comment">/* 松开与点下的x y不变，视为点击 */</span></div><div class="line">                v.performClick();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">move</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;</div><div class="line"></div><div class="line">            <span class="comment">/* 获取 WindowManager */</span></div><div class="line">            WindowManager wm = (WindowManager) getSystemService(Service.WINDOW_SERVICE);</div><div class="line">            <span class="comment">/* 设置新的x y的值 */</span></div><div class="line">            wmParams.x += event.getX() – x;</div><div class="line">            wmParams.y += event.getY() – y;</div><div class="line">            <span class="comment">/* 更新位置 */</span></div><div class="line">            wm.updateViewLayout(v, wmParams);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></p>
-
           
+
+悬浮窗是把控件添加到WindowManager并且设置其 WindowManager.Layoutparams设置为包含控件大小、类型为ALERT等可弹出的等。
+悬浮窗用处很多，其中包括：ListView/GridView的拖动、Toast等
+ 
+123456789101112131415161
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/28/e5-8f-aa-e5-9c-a8-e4-b8-bb-e7-95-8c-e9-9d-a2-e5-ba-94-e7-94-a8-e4-b8-8a-e6-98-be-e7-a4-ba-e7-9a-84-e6-82-ac-e6-b5-ae-e7-aa-97/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1178,6 +1075,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/28/ksoap2-e8-bf-9e-e6-8e-a5-webservice/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/ksoap2-e8-bf-9e-e6-8e-a5-webservice/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -1199,11 +1103,14 @@
       
         
           
-            <p>ksoap2 连接 webservice，ksoap2 较为轻型，适合Android使用，Android没有内置WebService工具，WebService传回数据是标准的XML，可以用SoapObject直接得到结点值<br>ksoap2 code.google.com地址：<a href="https://code.google.com/p/ksoap2-android/" target="_blank" rel="external">https://code.google.com/p/ksoap2-android/</a><br>下载的ksoap2-android-assembly-x.x.x-jar-with-dependencies.jar文件放到libs中就可以使用了。</p>
-<p>ksoap2主要使用对象： <code>SoapObject</code>(连接参数描述)、 <code>SoapSerializationEnvelope</code>(连接描述)、<code>HttpTransportSE</code>(发起连接)、<code>SoapFault/SoapFault12</code>(错误描述，可以打印错误栈)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String NAME_SPACE = “http:<span class="comment">//WebXml.com.cn/”;</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String URL = “http:<span class="comment">//www.webxml.com.cn/WebServices/ChinaZipSearchWebService.asmx”;</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String METHOD_NAME = “getSupportProvince”;</div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SOAP_ACTION = NAME_SPACE + METHOD_NAME;   <span class="comment">// 通常为NAME_SPACE + METHOD_NAME，为null会连接不上</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">conn</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="comment">/* 生成SoapObject对象，指明要连接的对象</span></div><div class="line">     * 第一个参数为命名空间，第二个参数为方法 */</div><div class="line">          SoapObject so = <span class="keyword">new</span> SoapObject(NAME_SPACE, METHOD_NAME);</div><div class="line">     <span class="comment">/* 方法携带的参数 */</span></div><div class="line">     <span class="comment">// so.addProperty(“tns:getWeatherbyCityNameSoapIn”, “福建”);</span></div><div class="line">     <span class="comment">/* SOAP信息描述，传入的参数是WebService soap版本 */</span></div><div class="line">     SoapSerializationEnvelope sse = <span class="keyword">new</span> SoapSerializationEnvelope(SoapSerializationEnvelope.VER11);</div><div class="line">     <span class="comment">/* 设置输入接收对象 */</span></div><div class="line">     sse.bodyOut = so;</div><div class="line">     sse.setOutputSoapObject(so);</div><div class="line">     sse.dotNet = <span class="keyword">true</span>;     <span class="comment">// 这行功能未知，注释掉同样可以取得连接，wsdl的必须为true</span></div><div class="line">     <span class="comment">/* 创建HttpTransportSE，这个对象描述了WebService的URL，由它来进行连接 */</span></div><div class="line">     HttpTransportSE ht = <span class="keyword">new</span> HttpTransportSE(URL);</div><div class="line">     <span class="keyword">try</span> &#123;</div><div class="line">          <span class="comment">/* 开始连接 */</span></div><div class="line">          ht.call(SOAP_ACTION, sse);</div><div class="line">          <span class="comment">/* 获取连接结果，造成错误经常是代码里的问题，如果测试通过应该不管是否成功都返回SoapObject */</span></div><div class="line">          <span class="keyword">if</span> (sse.bodyIn <span class="keyword">instanceof</span> SoapObject) &#123;</div><div class="line">               SoapObject rso = (SoapObject) sse.bodyIn;</div><div class="line">               SoapObject result = (SoapObject) rso.getProperty(METHOD_NAME + “Result”);</div><div class="line">               <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; result.getPropertyCount(); i ++) &#123;</div><div class="line">                    System.out.println(result.getProperty(i));</div><div class="line">                    tv.append(result.getProperty(i).toString() + “\n”);</div><div class="line">               &#125;</div><div class="line">          &#125; <span class="keyword">else</span> &#123;</div><div class="line">          SoapFault sf = (SoapFault) sse.getResponse();</div><div class="line">         sf.printStackTrace();</div><div class="line">          &#125;</div><div class="line">     &#125; <span class="keyword">catch</span> (HttpResponseException e) &#123;</div><div class="line">          <span class="comment">// TODO Auto-generated catch block</span></div><div class="line">          e.printStackTrace();</div><div class="line">     &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">          <span class="comment">// TODO Auto-generated catch block</span></div><div class="line">          e.printStackTrace();</div><div class="line">     &#125; <span class="keyword">catch</span> (XmlPullParserException e) &#123;</div><div class="line">          <span class="comment">// TODO Auto-generated catch block</span></div><div class="line">          e.printStackTrace();</div><div class="line">     &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          ksoap2 连接 webservice，ksoap2 较为轻型，适合Android使用，Android没有内置WebService工具，WebService传回数据是标准的XML，可以用SoapObject直接得到结点值ksoap2 code.google.com地址：https://code.g
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/28/ksoap2-e8-bf-9e-e6-8e-a5-webservice/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1293,6 +1200,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/27/notificationmanager-e5-92-8cnotification/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/27/notificationmanager-e5-92-8cnotification/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -1314,19 +1228,15 @@
       
         
           
-            <p>Notification 是下拉列表与状态栏信息显示控件，最常见的案例是短信 —– 收到短信的时候，状态栏会显示通知提示，LED灯亮起，提示音响起，手机震动，下拉栏里新增该信息的通知，点击该通知将跳转到信息Activity中</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 得到 NotificationManager 对象，这个对象的获取通过 Context 的 getSystemSerivce 可以得到</span></div><div class="line">NotificationManager nm = (NotificationManager) <span class="keyword">this</span>.getSystemService(Context.NOTIFICATION_SERVICE);</div><div class="line"> <span class="comment">// 创建一个 Notification 对象， 这里传入的三个值是显示在状态栏上的，其中第二项将会在刚显示的时候出现</span></div><div class="line">Notification notification = <span class="keyword">new</span> Notification(android.R.drawable.stat_notify_chat, “Hello World”, System.currentTimeMillis());</div><div class="line"> <span class="comment">// 点击了该 Notification(通知) 打开的窗口</span></div><div class="line">Intent notificationIntent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, ListActivity.class);</div><div class="line"> <span class="comment">// Notification 的Intent</span></div><div class="line">PendingIntent contentIntent = PendingIntent. getActivity(<span class="keyword">this</span>, <span class="number">0</span>, notificationIntent, <span class="number">0</span>);</div><div class="line"><span class="comment">// 调用系统 Notification 的话，在下拉列表里显示的信息(图标已经在上面设置过)</span></div><div class="line">notification.setLatestEventInfo( <span class="keyword">this</span>, “我是Title” , “这是一条通知”, contentIntent);</div><div class="line"> <span class="comment">// 显示 Notification</span></div><div class="line">nm.notify(<span class="number">0</span>, notification);</div></pre></td></tr></table></figure>
-<ul>
-<li><p><strong>PendingIntent 的 requestCode 如果设置成同一个值，那么就会根据 flag 进行相关操作，两个 PendingIntent被认为是同一个</strong></p>
-</li>
-<li><p><strong>自定义 Notification 样式的核心是设置contentView为一个RemoteView</strong></p>
-</li>
-</ul>
-<h4 id="相关资料："><a href="#相关资料：" class="headerlink" title="相关资料："></a>相关资料：</h4><p><a href="http://blog.csdn.net/ddna/article/details/5122083" target="_blank" rel="external">http://blog.csdn.net/ddna/article/details/5122083</a></p>
-<p><div align="left">               <a href="http://blog.csdn.net/furongkang/article/details/6900338" target="_blank" rel="external">http://blog.csdn.net/furongkang/article/details/6900338</a></div><br><br>&nbsp;</p>
-<p>&nbsp;</p>
+          Notification 是下拉列表与状态栏信息显示控件，最常见的案例是短信 —– 收到短信的时候，状态栏会显示通知提示，LED灯亮起，提示音响起，手机震动，下拉栏里新增该信息的通知，点击该通知将跳转到信息Activity中
+123456789101112// 得到 NotificationMana
+          ...
 
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/27/notificationmanager-e5-92-8cnotification/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1416,6 +1326,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/27/sax-e8-a7-a3-e6-9e-90-e5-b0-8f-e8-ae-b0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/27/sax-e8-a7-a3-e6-9e-90-e5-b0-8f-e8-ae-b0/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -1437,53 +1354,17 @@
       
         
           
-            <ol>
-<li>SAX解析需要先通过SAXParserFactory.newInstance()得到SAXParseFacotry，</li>
-<li>通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader</li>
-<li>通过SAXParser得到XMLReader</li>
-<li>设置XMLReader的ContentHandler(内容处理者)为DefaultHandler</li>
-<li>调用XMLReader的parser()方法开始解析</li>
-</ol>
-<p><strong>↑↑↑这些步骤都是死板的</strong><br><strong>需要记住的是DefaultHandler的继承，对于内部方法的重载：</strong></p>
-<table>
-<thead>
-<tr>
-<th>方法名</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>startDocument()</code></td>
-<td>调用于文件的开始</td>
-</tr>
-<tr>
-<td><code>endDocument()</code></td>
-<td>调用于文件的结束</td>
-</tr>
-<tr>
-<td><code>startElement(String uri, String localName, String qName, Attributes)</code></td>
-<td>调用于元素的开始，元素开始就是一个元素如<book>出现</book></td>
-</tr>
-<tr>
-<td><code>endElement(String uri, String localName, String qName)</code></td>
-<td>用于元素的结束，元素结束就是一个元素如出现</td>
-</tr>
-<tr>
-<td><code>characters(char[] ch, int start, int length)</code></td>
-<td>调用于元素开始之后，如果一个元素如<book>think in java </book>出现，在startElement方法被调用以后，将会调用characters，这个时候可以得到 “think in java” 这个字符串。</td>
-</tr>
-</tbody>
-</table>
-<p><span style="color:#F66">SAX的使用需要注意的是：SAX的元素因为在characters中调用，所以并不知道这个文本属于哪个元素，需要有一个记录当前元素的东西。</span></p>
-<blockquote>
-<p>XML有开始元素和结束元素，在开始元素跟结束元素之间，还会存在一些元素，要保持xml文件当中的结构用Stack是一个不错的选择。</p>
-</blockquote>
-<hr>
-<p>DOM生成XML通过<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">transformer.setOutputProperty(OutputKeys. INDENT, “yes” );</div><div class="line">transformer.setOutputProperty( “&#123;http:<span class="comment">//xml.apache.org/xalan&#125;indent-amount” , “2” );</span></div></pre></td></tr></table></figure></p>
-<p>设置缩进</p>
-
           
+SAX解析需要先通过SAXParserFactory.newInstance()得到SAXParseFacotry，
+通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader
+通过SAXParser得到X
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/27/sax-e8-a7-a3-e6-9e-90-e5-b0-8f-e8-ae-b0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1700,9 +1581,30 @@
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"eraise"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
   
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
 
 
 
