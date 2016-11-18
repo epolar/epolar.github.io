@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="Eraise"><meta name="description" content="设置FiddlerFiddler首先需要做设置:允许远程连接打开窗口Tools-&amp;gt;FiddlerOptions选择Connections标签页把Allowremotecomputerstoconnection勾上点击确定设置Ge"><meta name="keywords" content=""><title>Fiddler抓Genymotion的包 · 我吃西瓜</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://eraise.xyz/2016/03/23/fiddler-e6-8a-93genymotion-e7-9a-84-e5-8c-85/"><link rel="alternate" href="/atom.xml" title="我吃西瓜"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript">var _hmt = _hmt || [];
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="Eraise"><meta name="description" content="设置FiddlerFiddler首先需要做设置:允许远程连接打开窗口Tools-&amp;gt;FiddlerOptions选择Connections标签页把Allowremotecomputerstoconnection勾上点击确定设置Ge"><meta name="keywords" content=""><title>Fiddler抓Genymotion的包 · 我吃西瓜</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://eraise.xyz/2016/03/23/fiddler-e6-8a-93genymotion-e7-9a-84-e5-8c-85/"><link rel="alternate" href="/atom.xml" title="我吃西瓜"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript">var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?Your baidu Analytics ID";
+  hm.src = "//hm.baidu.com/hm.js?92ceb44df626dd88b7190057da6f94e0";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
@@ -11,7 +11,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'Your Google Analytics ID', 'auto');
-ga('send', 'pageview');</script></head><body><div id="main"><header><a href="/." class="logo">我吃西瓜</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">Home</a></li><li class="nav-link"><a href="/archives/" target="_self">Archives</a></li><li class="nav-link"><a href="/categories/" target="_self">Categories</a></li><li class="nav-link"><a href="/tags/" target="_self">Tags</a></li><li class="nav-link"><a href="/about/" target="_self">About</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Fiddler抓Genymotion的包</h1><span class="post-time">Mar 23, 2016</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Contents</h3><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#设置-Fiddler"><span class="toc-text">设置 Fiddler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置-Genymotion"><span class="toc-text">设置 Genymotion</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fiddler-使用笔记"><span class="toc-text">Fiddler 使用笔记</span></a></li></ol></div><div class="post-content"><h4 id="设置-Fiddler"><a href="#设置-Fiddler" class="headerlink" title="设置 Fiddler"></a>设置 Fiddler</h4><ul>
+ga('send', 'pageview');</script></head><body><div id="main"><header><a href="/." class="logo">我吃西瓜</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">主页</a></li><li class="nav-link"><a href="/archives" target="_self">文章</a></li><li class="nav-link"><a href="/categories" target="_self">分类</a></li><li class="nav-link"><a href="/tags" target="_self">标签</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Fiddler抓Genymotion的包</h1><span class="post-time">2016年3月23日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">Contents</h3><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#设置-Fiddler"><span class="toc-text">设置 Fiddler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置-Genymotion"><span class="toc-text">设置 Genymotion</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fiddler-使用笔记"><span class="toc-text">Fiddler 使用笔记</span></a></li></ol></div><div class="post-content"><h4 id="设置-Fiddler"><a href="#设置-Fiddler" class="headerlink" title="设置 Fiddler"></a>设置 Fiddler</h4><ul>
 <li>Fiddler 首先需要做设置:允许远程连接</li>
 </ul>
 <ol>
@@ -36,16 +36,11 @@ ga('send', 'pageview');</script></head><body><div id="main"><header><a href="/."
 <li>go 可以直接继续运行所有当前因为断点而暂停的请求</li>
 <li>bpu + 网址 和 bpafter + 网址 分别在请求到达服务器前和请求到达终端(手机)前进行断点，如果不加网址，则会清除对应的断点</li>
 </ol>
-</div></article><div class="tags"></div><div class="paginator"><a href="/2016/06/02/e6-b5-8b-c2-b7-listview-e5-9c-a8-e6-bb-9a-e5-8a-a8-e4-b8-ad-e5-88-87-e6-8d-a2adapter-md/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2016/02/01/e6-90-ad-e5-bb-ba-e8-87-aa-e5-b7-b1-e7-9a-84maven-e6-9c-8d-e5-8a-a1-e5-99-a8-e7-bb-99-e5-86-85-e9-83-a8-e9-a1-b9-e7-9b-ae-e4-bd-bf-e7-94-a8-md/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
-    this.page.url = 'http://eraise.xyz/2016/03/23/fiddler-e6-8a-93genymotion-e7-9a-84-e5-8c-85/';
-    this.page.identifier = '2016/03/23/fiddler-e6-8a-93genymotion-e7-9a-84-e5-8c-85/';
-    this.page.title = 'Fiddler抓Genymotion的包';
-};
+</div></article><div class="tags"></div><div class="paginator"><a href="/2016/06/02/e6-b5-8b-c2-b7-listview-e5-9c-a8-e6-bb-9a-e5-8a-a8-e4-b8-ad-e5-88-87-e6-8d-a2adapter-md/" class="prev"><i class="iconfont icon-left"></i><span> Prev</span></a><a href="/2016/02/01/e6-90-ad-e5-bb-ba-e8-87-aa-e5-b7-b1-e7-9a-84maven-e6-9c-8d-e5-8a-a1-e5-99-a8-e7-bb-99-e5-86-85-e9-83-a8-e9-a1-b9-e7-9b-ae-e4-bd-bf-e7-94-a8-md/" class="next"><span>Next</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div data-thread-key="http://eraise.xyz/2016/03/23/fiddler-e6-8a-93genymotion-e7-9a-84-e5-8c-85/index.html" data-title="Fiddler抓Genymotion的包" data-url="http://eraise.xyz/2016/03/23/fiddler-e6-8a-93genymotion-e7-9a-84-e5-8c-85/index.html" class="ds-thread"></div><script type="text/javascript">var duoshuoQuery = {short_name: "eraise" };
 (function() {
-var d = document, s = d.createElement('script');
-
-s.src = '//Your disqus ID.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();</script></section><footer><div class="social"><a href="mailto:your@email.com" title="email" class="iconfont icon-email"></a><a href="/" title="github" class="iconfont icon-github"></a><a href="/atom.xml" title="rss" class="iconfont icon-rss"></a></div><div class="copyright"><p class="power">Powered by <a href="https://hexo.io/">Hexo</a> and Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p><p class="since">&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">Eraise</span></p></div><div id="back2top"><i class="iconfont icon-up"></i></div></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();</script></section></section><footer><div class="social"><a href="mailto:eraise@qq.com" title="email" class="iconfont icon-email"></a><a href="https://github.com/epolar" title="github" class="iconfont icon-github"></a><a href="/atom.xml" title="rss" class="iconfont icon-rss"></a></div><div class="copyright"><p class="power">Powered by <a href="https://hexo.io/">Hexo</a> and Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p><p class="since">&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">Eraise</span></p></div><div id="back2top"><i class="iconfont icon-up"></i></div></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>
