@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://eraise.xyz/"/>
-  <updated>2016-11-18T06:17:46.434Z</updated>
+  <updated>2016-11-25T02:37:58.867Z</updated>
   <id>http://eraise.xyz/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AndroidStudio多渠道不同依赖</title>
+    <link href="http://eraise.xyz/2016/11/25/AndroidStudio%E5%A4%9A%E6%B8%A0%E9%81%93%E4%B8%8D%E5%90%8C%E4%BE%9D%E8%B5%96/"/>
+    <id>http://eraise.xyz/2016/11/25/AndroidStudio多渠道不同依赖/</id>
+    <published>2016-11-25T01:08:16.000Z</published>
+    <updated>2016-11-25T02:37:58.867Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>国内的应用市场太多，时不时就会要求开发者上传应用的时候需要集成他们家的某些SDK，而且还可能是互斥的，比如说百度市场需要集成百度更新但不可以集成360更新，而360市场需要集成360更新而不能集成百度更新。比较傻的方法就是每次要导这两家市场的包，就把代码复制一份集成他们各自的SDK。不过通过复制，太费力了，于是在网上查了些资料发现可以通过 Gradle 的 <strong>BuildVariant</strong> 构建变体，使不同的渠道拥有不同的依赖，甚至是不同的代码和res资源。</p>
+<a id="more"></a>
+<h5 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h5><p>在模块的 build.gradle 里配置不同的 flavors:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">  ... 省略 ...</div><div class="line">  productFlavors &#123;</div><div class="line">        official &#123;&#125;</div><div class="line">        qihoo &#123;&#125;</div><div class="line">        xiaomi &#123;&#125;</div><div class="line">        baidu &#123;&#125;</div><div class="line">        anzhuoshichang &#123;&#125;</div><div class="line">        huawei &#123;&#125;</div><div class="line">        leshangdian &#123;&#125;</div><div class="line">        yingyongbao &#123;&#125;</div><div class="line">        wandoujia &#123;&#125;</div><div class="line">        meizu &#123;&#125;</div><div class="line">        oppo &#123;&#125;</div><div class="line">        jinli &#123;&#125;</div><div class="line"></div><div class="line">        <span class="comment">// 替换掉 manifest 里设置的参数，举个粟子，友盟的：</span></div><div class="line">        <span class="comment">// &lt;meta-data android:name="UMENG_CHANNEL" android:value="$&#123;CHANNEL_VALUE&#125;" /&gt;</span></div><div class="line">        productFlavors.all &#123;</div><div class="line">            flavor -&gt; flavor.manifestPlaceholders = [CHANNEL_VALUE: name]</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">dependencies &#123;</div><div class="line">  ... 省略 ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过上面的配置，就已经可以导出多渠道包了(这种方案导出是省力，可是机子一直在打包，比较慢，可以通过其他方法进行优化)，但是还是不同渠道不同依赖的问题却需要去解决</p>
+<h5 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h5><ol>
+<li>创建在项目目录里创建好 module，比如百度的就创建个 baiduchannel，所有的模块需要提供一个统一的接口，如：xyz.eraise.channel.CheckUpdate.checkUpdate()</li>
+<li>针对不同渠道配置不同的依赖：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    compile fileTree(dir: <span class="string">'libs'</span>, <span class="attr">include</span>: [<span class="string">'*.jar'</span>])</div><div class="line">    androidTestCompile(<span class="string">'com.android.support.test.espresso:espresso-core:2.2.2'</span>, &#123;</div><div class="line">        exclude group: <span class="string">'com.android.support'</span>, <span class="attr">module</span>: <span class="string">'support-annotations'</span> <span class="comment">// 去除 com.android.support:support-annotations:xxx 依赖</span></div><div class="line">    &#125;)</div><div class="line">    compile <span class="string">'com.android.support:appcompat-v7:24.2.1'</span></div><div class="line">    testCompile <span class="string">'junit:junit:4.12'</span></div><div class="line"></div><div class="line">    compile project(<span class="string">":officialchannel"</span>) <span class="comment">// 默认渠道配置</span></div><div class="line">    <span class="comment">// 渠道名 + Compile</span></div><div class="line">    baiduCompile project(<span class="string">":baiduchannel"</span>), &#123;</div><div class="line">        exclude <span class="built_in">module</span>: <span class="string">':officialchannel'</span>  <span class="comment">// exclude 关键字排除的是外面写的 officialchannel</span></div><div class="line">        exclude <span class="built_in">module</span>: <span class="string">':library'</span>  <span class="comment">// 对于 baiduchannel 所依赖的 library，依然还是有导入使用的</span></div><div class="line">    &#125;</div><div class="line">    qihooCompile project(<span class="string">':qihoochanner'</span>), &#123;   <span class="comment">// project 名称不能包含数字，包含数字会失败</span></div><div class="line">        exclude <span class="built_in">module</span>: <span class="string">':officialchannel'</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>exclude 会将默认的渠道依赖去除掉，通过这种方案，可以即可得到不同的渠道不同的依赖，不过有个问题是， <strong>eclude 如果排除掉 jar ？</strong> 我找了许久没找到方案，都是通过 compile freeTree(dir: ‘libs’, include: [‘*.jar’], excludes: [‘xxx.jar’]) 事先排除掉不通用的</p>
+<h5 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h5><p>相比方案一，这种方案可能更为简单，并且会对不同的渠道可以提供不同的资源文件等，两种方案都能实现我现在的这种需求</p>
+<ol>
+<li>切换到 Project 视图，各模块，模块下为和 <strong>libs</strong> 和 <strong>src</strong> 两目录</li>
+<li>接下来对 src 操刀了，我们需要在 <strong>src</strong> 目录下创建和渠道名称一样的文件夹，该文件夹将和 main 文件夹同层级</li>
+<li>在这个文件夹里通过创建同路径的文件来覆盖掉 main 里的文件，比如说 main -&gt; java -&gt; xyz.eraise.channeldemo.CheckUpdate.java，<strong>如果是资源文件的话，会自动合并，res/values/strings.xml 等文件都是会合并的</strong></li>
+<li>dependencies 里设置依赖导入不同的依赖包，这跟方案一的一样，不过 <code>exclude</code> 将变成 <code>compile</code></li>
+</ol>
+<h5 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h5><ul>
+<li>exclude 怎样根据不同的渠道排除 jar？</li>
+</ul>
+<p><em>Gradle 应该还可以直接处理java代码，不过应该更复杂了</em></p>
+<h5 id="相关资源"><a href="#相关资源" class="headerlink" title="相关资源"></a>相关资源</h5><ul>
+<li><a href="https://docs.gradle.org/current/userguide/dependency_management.html" target="_blank" rel="external">Gradle依赖配置说明</a></li>
+<li><a href="http://www.jianshu.com/p/9b50c4059d61" target="_blank" rel="external">Gradle之多版本打包不同依赖配置</a></li>
+<li><a href="http://www.jianshu.com/p/74eba108c80d" target="_blank" rel="external">android 多渠道打包 变种打包（variant）方式</a></li>
+<li><a href="http://stackoverflow.com/questions/28137853/gradle-dependency-based-on-both-build-type-and-flavor" target="_blank" rel="external">StackOverFlow上一篇看不懂的文章，看懂求解说</a></li>
+<li><a href="http://ofc66dujp.bkt.clouddn.com/ChannelDemo.zip" target="_blank" rel="external">本例源码下载</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h5 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h5&gt;&lt;p&gt;国内的应用市场太多，时不时就会要求开发者上传应用的时候需要集成他们家的某些SDK，而且还可能是互斥的，比如说百度市场需要集成百度更新但不可以集成360更新，而360市场需要集成360更新而不能集成百度更新。比较傻的方法就是每次要导这两家市场的包，就把代码复制一份集成他们各自的SDK。不过通过复制，太费力了，于是在网上查了些资料发现可以通过 Gradle 的 &lt;strong&gt;BuildVariant&lt;/strong&gt; 构建变体，使不同的渠道拥有不同的依赖，甚至是不同的代码和res资源。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>NIO-Selector.select()不阻塞</title>
@@ -1385,85 +1431,6 @@ taskkill /f /t /im adb.exe // 强制终止任务， /f是强制 /t 是任务进�
       <category term="Notification" scheme="http://eraise.xyz/tags/Notification/"/>
     
       <category term="NotificationManager" scheme="http://eraise.xyz/tags/NotificationManager/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SAX解析小记</title>
-    <link href="http://eraise.xyz/2015/10/27/sax-e8-a7-a3-e6-9e-90-e5-b0-8f-e8-ae-b0/"/>
-    <id>http://eraise.xyz/2015/10/27/sax-e8-a7-a3-e6-9e-90-e5-b0-8f-e8-ae-b0/</id>
-    <published>2015-10-27T06:19:42.000Z</published>
-    <updated>2016-11-18T06:18:20.807Z</updated>
-    
-    <content type="html"><![CDATA[<ol>
-<li>SAX解析需要先通过SAXParserFactory.newInstance()得到SAXParseFacotry，</li>
-<li>通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader</li>
-<li>通过SAXParser得到XMLReader</li>
-<li>设置XMLReader的ContentHandler(内容处理者)为DefaultHandler</li>
-<li>调用XMLReader的parser()方法开始解析</li>
-</ol>
-<p><strong>↑↑↑这些步骤都是死板的</strong><br><strong>需要记住的是DefaultHandler的继承，对于内部方法的重载：</strong></p>
-<a id="more"></a>
-<table>
-<thead>
-<tr>
-<th>方法名</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>startDocument()</code></td>
-<td>调用于文件的开始</td>
-</tr>
-<tr>
-<td><code>endDocument()</code></td>
-<td>调用于文件的结束</td>
-</tr>
-<tr>
-<td><code>startElement(String uri, String localName, String qName, Attributes)</code></td>
-<td>调用于元素的开始，元素开始就是一个元素如<book>出现</book></td>
-</tr>
-<tr>
-<td><code>endElement(String uri, String localName, String qName)</code></td>
-<td>用于元素的结束，元素结束就是一个元素如出现</td>
-</tr>
-<tr>
-<td><code>characters(char[] ch, int start, int length)</code></td>
-<td>调用于元素开始之后，如果一个元素如<book>think in java </book>出现，在startElement方法被调用以后，将会调用characters，这个时候可以得到 “think in java” 这个字符串。</td>
-</tr>
-</tbody>
-</table>
-<p><span style="color:#F66">SAX的使用需要注意的是：SAX的元素因为在characters中调用，所以并不知道这个文本属于哪个元素，需要有一个记录当前元素的东西。</span></p>
-<blockquote>
-<p>XML有开始元素和结束元素，在开始元素跟结束元素之间，还会存在一些元素，要保持xml文件当中的结构用Stack是一个不错的选择。</p>
-</blockquote>
-<hr>
-<p>DOM生成XML通过<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">transformer.setOutputProperty(OutputKeys. INDENT, “yes” );</div><div class="line">transformer.setOutputProperty( “&#123;http:<span class="comment">//xml.apache.org/xalan&#125;indent-amount” , “2” );</span></div></pre></td></tr></table></figure></p>
-<p>设置缩进</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ol&gt;
-&lt;li&gt;SAX解析需要先通过SAXParserFactory.newInstance()得到SAXParseFacotry，&lt;/li&gt;
-&lt;li&gt;通过SAXParserFactory得到SAXParser，直接执行SAXParser的parser方法或通过SAXParser得到XMLReader&lt;/li&gt;
-&lt;li&gt;通过SAXParser得到XMLReader&lt;/li&gt;
-&lt;li&gt;设置XMLReader的ContentHandler(内容处理者)为DefaultHandler&lt;/li&gt;
-&lt;li&gt;调用XMLReader的parser()方法开始解析&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;↑↑↑这些步骤都是死板的&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;需要记住的是DefaultHandler的继承，对于内部方法的重载：&lt;/strong&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Android笔记" scheme="http://eraise.xyz/categories/Android%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="java" scheme="http://eraise.xyz/tags/java/"/>
-    
-      <category term="sax" scheme="http://eraise.xyz/tags/sax/"/>
-    
-      <category term="xml" scheme="http://eraise.xyz/tags/xml/"/>
     
   </entry>
   
